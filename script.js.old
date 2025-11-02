@@ -1,0 +1,407 @@
+// ========== CHARGEMENT ET GROUPEMENT DES VERBES PAR GROUPES DU PLANNING ==========
+
+let verbsData = [];
+let groups = []; // Sera rempli dynamiquement avec 12 groupes
+let groupCheckboxes = [];
+let activeVerbs = [];
+let currentVerb = null;
+let currentExerciseType = 0;
+let correctAnswer = "";
+let score = 0;
+let totalQuestions = 0;
+let streak = 0;
+let streakGoal = 25;
+let selectedGroups = [];
+
+const selectionSection = document.getElementById('selection-section');
+const exerciseSection = document.getElementById('exercise-section');
+const completionSection = document.getElementById('completion-section');
+const questionElement = document.getElementById('question');
+const answerContainer = document.getElementById('answer-container');
+const feedbackContainer = document.getElementById('feedback-container');
+const checkButton = document.getElementById('check-btn');
+const nextButton = document.getElementById('next-btn');
+const scoreElement = document.getElementById('score');
+const totalElement = document.getElementById('total');
+const streakElement = document.getElementById('streak');
+const streakTargetElement = document.getElementById('streak-target');
+const startButton = document.getElementById('start-btn');
+const restartButton = document.getElementById('restart-btn');
+const newSessionButton = document.getElementById('new-session-btn');
+const streakGoalInput = document.getElementById('streak-goal');
+const finalStreakGoalElement = document.getElementById('final-streak-goal');
+const finalScoreElement = document.getElementById('final-score');
+const finalTotalElement = document.getElementById('final-total');
+const finalAccuracyElement = document.getElementById('final-accuracy');
+
+// Chargement du fichier JSON et création des groupes selon le planning
+fetch('verbes.json')
+  .then(response => response.json())
+  .then(data => {
+    verbsData = data;
+    creerGroupesDepuisPlanning();
+    construireCasesGroupesDynamiques();
+  })
+  .catch(error => {
+    alert("Erreur de chargement du fichier JSON des verbes !");
+    console.error(error);
+  });
+
+function creerGroupesDepuisPlanning() {
+  // Organiser les verbes par groupe (attribut "group" dans le JSON)
+  const maxGroup = Math.max(...verbsData.map(v => v.group || 1));
+  groups = Array.from({length: maxGroup}, () => []);
+  
+  verbsData.forEach(v => {
+    const groupIndex = (v.group || 1) - 1;
+    if (groupIndex >= 0 && groupIndex < groups.length) {
+      groups[groupIndex].push([v.base, v.preterite, v.participle, v.fr]);
+    }
+  });
+}
+
+function construireCasesGroupesDynamiques() {
+  const container = document.getElementById('verb-groups-container');
+  container.innerHTML = "";
+  groupCheckboxes = [];
+  
+  // Noms des groupes avec les verbes français (traductions courtes)
+  const groupNames = [
+    "Groupe 1 (courir, rêver, saigner, savoir, boire...)",
+    "Groupe 2 (jeter, heurter, raconter, louer, balayer...)",
+    "Groupe 3 (être, voler, jeter, dire, vendre...)",
+    "Groupe 4 (fermer, interdire, aller, gagner, distribuer...)",
+    "Groupe 5 (pleurer, battre, s'asseoir, envoyer, coller...)",
+    "Groupe 6 (étaler, casser, mettre, déchirer, avoir...)",
+    "Groupe 7 (épeler, dessiner, parier, dormir, se cacher...)",
+    "Groupe 8 (mettre la table, retirer, devenir, tirer...)",
+    "Groupe 9 (puer, lire, pousser, ramper, voir...)",
+    "Groupe 10 (choisir, tenir, éclater, s'élever, nourrir...)",
+    "Groupe 11 (faire, perdre, signifier, blesser, chanter...)",
+    "Groupe 12 (tomber, jurer, sentir, nager, dépenser...)"
+  ];
+  
+  for (let i = 0; i < groups.length; i++) {
+    if (groups[i].length === 0) continue;
+    
+    const div = document.createElement('div');
+    div.className = 'verb-group';
+    
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.id = 'group-' + i;
+    cb.checked = true;
+    groupCheckboxes.push(cb);
+    
+    label.appendChild(cb);
+    const groupName = groupNames[i] || `Groupe ${i + 1}`;
+    label.appendChild(document.createTextNode(` ${groupName} - ${groups[i].length} verbes`));
+    
+    div.appendChild(label);
+    container.appendChild(div);
+  }
+}
+
+// ========== APPLICATION PRINCIPALE ==========
+
+// Lancer la session
+startButton.addEventListener('click', function() {
+  if (!groupCheckboxes.some(cb => cb.checked)) {
+    alert("Veuillez sélectionner au moins un groupe de verbes.");
+    return;
+  }
+  
+  streakGoal = parseInt(streakGoalInput.value) || 25;
+  selectedGroups = groupCheckboxes.map(cb => cb.checked);
+  
+  // Construire la liste des verbes actifs depuis les groupes sélectionnés
+  activeVerbs = [];
+  for (let i = 0; i < groupCheckboxes.length; i++) {
+    if (groupCheckboxes[i].checked) {
+      activeVerbs = activeVerbs.concat(groups[i]);
+    }
+  }
+  
+  if (activeVerbs.length === 0) {
+    alert("Aucun verbe sélectionné.");
+    return;
+  }
+  
+  selectionSection.style.display = 'none';
+  exerciseSection.style.display = 'block';
+  streakTargetElement.textContent = streakGoal;
+  score = 0;
+  totalQuestions = 0;
+  streak = 0;
+  updateScore();
+  createNewExercise();
+});
+
+function updateScore() {
+  scoreElement.textContent = score;
+  totalElement.textContent = totalQuestions;
+  streakElement.textContent = streak;
+}
+
+// Créer exercice
+function createNewExercise() {
+  answerContainer.innerHTML = '';
+  feedbackContainer.innerHTML = '';
+  checkButton.style.display = 'block';
+  nextButton.style.display = 'none';
+  selectedOption = null;
+  
+  currentVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+  
+  // Probabilités d'exercice
+  const probabilities = { qcm: 20, textInput: 30, enToFr: 25, frToEn: 25 };
+  const randomValue = Math.random() * 100;
+  
+  if (randomValue < probabilities.qcm) {
+    currentExerciseType = 0; // QCM
+  } else if (randomValue < probabilities.qcm + probabilities.textInput) {
+    currentExerciseType = 1; // Saisie texte
+  } else if (randomValue < probabilities.qcm + probabilities.textInput + probabilities.enToFr) {
+    currentExerciseType = 2; // Anglais > Français
+  } else {
+    currentExerciseType = 3; // Français > Anglais
+  }
+  
+  switch (currentExerciseType) {
+    case 0: createFormExercise(); break;
+    case 1: createFormInputExercise(); break;
+    case 2: createEnglishToFrenchExercise(); break;
+    case 3: createFrenchToEnglishExercise(); break;
+  }
+}
+
+// QCM participe/prétérit
+function createFormExercise() {
+  const askForPast = Math.random() > 0.5;
+  const formIndex = askForPast ? 1 : 2;
+  correctAnswer = currentVerb[formIndex];
+  
+  questionElement.textContent = askForPast
+    ? `Quel est le prétérit du verbe "${currentVerb[0]}" (${currentVerb[3]}) ?`
+    : `Quel est le participe passé du verbe "${currentVerb[0]}" (${currentVerb[3]}) ?`;
+  
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'options';
+  
+  let options = [correctAnswer];
+  while (options.length < 4) {
+    const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+    if (randomVerb !== currentVerb) {
+      const wrongOption = randomVerb[formIndex];
+      if (!options.includes(wrongOption)) options.push(wrongOption);
+    }
+  }
+  
+  options.sort(() => Math.random() - 0.5);
+  
+  options.forEach(option => {
+    const optionButton = document.createElement('div');
+    optionButton.className = 'option';
+    optionButton.textContent = option;
+    optionButton.addEventListener('click', function() {
+      if (selectedOption) selectedOption.classList.remove('selected');
+      this.classList.add('selected');
+      selectedOption = this;
+    });
+    optionsDiv.appendChild(optionButton);
+  });
+  
+  answerContainer.appendChild(optionsDiv);
+}
+
+function createFormInputExercise() {
+  const askForPast = Math.random() > 0.5;
+  const formIndex = askForPast ? 1 : 2;
+  correctAnswer = currentVerb[formIndex];
+  
+  questionElement.textContent = askForPast
+    ? `Écrivez le prétérit du verbe "${currentVerb[0]}" (${currentVerb[3]}) :`
+    : `Écrivez le participe passé du verbe "${currentVerb[0]}" (${currentVerb[3]}) :`;
+  
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.className = 'input-answer';
+  input.placeholder = 'Votre réponse...';
+  input.id = 'text-answer';
+  input.addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') checkAnswer();
+  });
+  
+  answerContainer.appendChild(input);
+  setTimeout(() => input.focus(), 100);
+}
+
+// Anglais > Français
+function createEnglishToFrenchExercise() {
+  correctAnswer = currentVerb[3];
+  questionElement.textContent = `Comment se dit "${currentVerb[0]}" en français ?`;
+  
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'options';
+  
+  let options = [correctAnswer];
+  while (options.length < 4) {
+    const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+    if (randomVerb !== currentVerb) {
+      const wrongOption = randomVerb[3];
+      if (!options.includes(wrongOption)) options.push(wrongOption);
+    }
+  }
+  
+  options.sort(() => Math.random() - 0.5);
+  
+  options.forEach(option => {
+    const optionButton = document.createElement('div');
+    optionButton.className = 'option';
+    optionButton.textContent = option;
+    optionButton.addEventListener('click', function() {
+      if (selectedOption) selectedOption.classList.remove('selected');
+      this.classList.add('selected');
+      selectedOption = this;
+    });
+    optionsDiv.appendChild(optionButton);
+  });
+  
+  answerContainer.appendChild(optionsDiv);
+}
+
+// Français > Anglais
+function createFrenchToEnglishExercise() {
+  correctAnswer = currentVerb[0];
+  questionElement.textContent = `Comment se dit "${currentVerb[3]}" en anglais ?`;
+  
+  const optionsDiv = document.createElement('div');
+  optionsDiv.className = 'options';
+  
+  let options = [correctAnswer];
+  while (options.length < 4) {
+    const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+    if (randomVerb !== currentVerb) {
+      const wrongOption = randomVerb[0];
+      if (!options.includes(wrongOption)) options.push(wrongOption);
+    }
+  }
+  
+  options.sort(() => Math.random() - 0.5);
+  
+  options.forEach(option => {
+    const optionButton = document.createElement('div');
+    optionButton.className = 'option';
+    optionButton.textContent = option;
+    optionButton.addEventListener('click', function() {
+      if (selectedOption) selectedOption.classList.remove('selected');
+      this.classList.add('selected');
+      selectedOption = this;
+    });
+    optionsDiv.appendChild(optionButton);
+  });
+  
+  answerContainer.appendChild(optionsDiv);
+}
+
+// Vérification de la réponse
+let selectedOption = null;
+
+function checkAnswer() {
+  let userAnswer = "";
+  let isCorrect = false;
+  
+  if (currentExerciseType === 1) {
+    const textInput = document.getElementById('text-answer');
+    if (textInput) {
+      userAnswer = textInput.value.trim().toLowerCase();
+      const possibleAnswers = correctAnswer.split('/').map(a => a.trim().toLowerCase());
+      isCorrect = possibleAnswers.includes(userAnswer);
+      
+      textInput.disabled = true;
+      textInput.style.borderColor = isCorrect ? '#58a700' : '#ff4b4b';
+      textInput.style.backgroundColor = isCorrect ? '#eaf7d8' : '#ffdbdb';
+    }
+  } else {
+    if (!selectedOption) {
+      alert("Veuillez sélectionner une réponse");
+      return;
+    }
+    
+    userAnswer = selectedOption.textContent;
+    isCorrect = userAnswer === correctAnswer;
+    
+    const options = document.querySelectorAll('.option');
+    options.forEach(option => {
+      if (option.textContent === correctAnswer) option.classList.add('correct');
+      else if (option === selectedOption && !isCorrect) option.classList.add('incorrect');
+    });
+  }
+  
+  totalQuestions++;
+  
+  if (isCorrect) {
+    score++;
+    streak++;
+    
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback correct';
+    feedback.textContent = '✅ Correct !';
+    feedbackContainer.appendChild(feedback);
+    
+    if (streak >= streakGoal) {
+      showCompletionScreen();
+      return;
+    }
+  } else {
+    streak = 0;
+    
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback incorrect';
+    feedback.textContent = `❌ Incorrect. La bonne réponse est : ${correctAnswer}`;
+    feedbackContainer.appendChild(feedback);
+  }
+  
+  updateScore();
+  checkButton.style.display = 'none';
+  nextButton.style.display = 'block';
+}
+
+// Félicitations
+function showCompletionScreen() {
+  finalStreakGoalElement.textContent = streakGoal;
+  finalScoreElement.textContent = score;
+  finalTotalElement.textContent = totalQuestions;
+  const accuracy = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
+  finalAccuracyElement.textContent = accuracy;
+  
+  exerciseSection.style.display = 'none';
+  completionSection.style.display = 'block';
+}
+
+// Boutons utilitaires
+function restart() {
+  score = 0;
+  totalQuestions = 0;
+  streak = 0;
+  completionSection.style.display = 'none';
+  exerciseSection.style.display = 'block';
+  updateScore();
+  createNewExercise();
+}
+
+function newSession() {
+  completionSection.style.display = 'none';
+  selectionSection.style.display = 'block';
+}
+
+function nextQuestion() {
+  createNewExercise();
+}
+
+// Boutons listeners
+checkButton.addEventListener('click', checkAnswer);
+nextButton.addEventListener('click', nextQuestion);
+restartButton.addEventListener('click', restart);
+newSessionButton.addEventListener('click', newSession);

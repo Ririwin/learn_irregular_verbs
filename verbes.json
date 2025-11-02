@@ -1,0 +1,835 @@
+[
+  {
+    "base": "run",
+    "preterite": "ran",
+    "participle": "run",
+    "fr": "courir",
+    "group": 1
+  },
+  {
+    "base": "dream",
+    "preterite": "dreamt",
+    "participle": "dreamt",
+    "fr": "rêver",
+    "group": 1
+  },
+  {
+    "base": "bleed",
+    "preterite": "bled",
+    "participle": "bled",
+    "fr": "saigner",
+    "group": 1
+  },
+  {
+    "base": "know",
+    "preterite": "knew",
+    "participle": "known",
+    "fr": "connaître, savoir",
+    "group": 1
+  },
+  {
+    "base": "drink",
+    "preterite": "drank",
+    "participle": "drunk",
+    "fr": "boire",
+    "group": 1
+  },
+  {
+    "base": "bend",
+    "preterite": "bent",
+    "participle": "bent",
+    "fr": "plier, courber",
+    "group": 1
+  },
+  {
+    "base": "give",
+    "preterite": "gave",
+    "participle": "given",
+    "fr": "donner",
+    "group": 1
+  },
+  {
+    "base": "steal",
+    "preterite": "stole",
+    "participle": "stolen",
+    "fr": "voler",
+    "group": 1
+  },
+  {
+    "base": "kneel",
+    "preterite": "knelt",
+    "participle": "knelt",
+    "fr": "s'agenouiller",
+    "group": 1
+  },
+  {
+    "base": "speak",
+    "preterite": "spoke",
+    "participle": "spoken",
+    "fr": "parler",
+    "group": 1
+  },
+  {
+    "base": "throw",
+    "preterite": "threw",
+    "participle": "thrown",
+    "fr": "jeter",
+    "group": 2
+  },
+  {
+    "base": "strike",
+    "preterite": "struck",
+    "participle": "struck",
+    "fr": "frapper, heurter",
+    "group": 2
+  },
+  {
+    "base": "tell",
+    "preterite": "told",
+    "participle": "told",
+    "fr": "dire, raconter",
+    "group": 2
+  },
+  {
+    "base": "let",
+    "preterite": "let",
+    "participle": "let",
+    "fr": "laisser, louer",
+    "group": 2
+  },
+  {
+    "base": "sweep",
+    "preterite": "swept",
+    "participle": "swept",
+    "fr": "balayer",
+    "group": 2
+  },
+  {
+    "base": "do",
+    "preterite": "did",
+    "participle": "done",
+    "fr": "faire",
+    "group": 2
+  },
+  {
+    "base": "dig",
+    "preterite": "dug",
+    "participle": "dug",
+    "fr": "creuser, fouiller",
+    "group": 2
+  },
+  {
+    "base": "lie",
+    "preterite": "lay",
+    "participle": "lain",
+    "fr": "se coucher (être...)",
+    "group": 2
+  },
+  {
+    "base": "come",
+    "preterite": "came",
+    "participle": "come",
+    "fr": "venir",
+    "group": 2
+  },
+  {
+    "base": "teach",
+    "preterite": "taught",
+    "participle": "taught",
+    "fr": "enseigner",
+    "group": 2
+  },
+  {
+    "base": "be",
+    "preterite": "was/were",
+    "participle": "been",
+    "fr": "être",
+    "group": 3
+  },
+  {
+    "base": "fly",
+    "preterite": "flew",
+    "participle": "flown",
+    "fr": "voler, aller en avion",
+    "group": 3
+  },
+  {
+    "base": "cast",
+    "preterite": "cast",
+    "participle": "cast",
+    "fr": "jeter, lancer",
+    "group": 3
+  },
+  {
+    "base": "say",
+    "preterite": "said",
+    "participle": "said",
+    "fr": "dire",
+    "group": 3
+  },
+  {
+    "base": "sell",
+    "preterite": "sold",
+    "participle": "sold",
+    "fr": "vendre",
+    "group": 3
+  },
+  {
+    "base": "hang",
+    "preterite": "hung",
+    "participle": "hung",
+    "fr": "accrocher",
+    "group": 3
+  },
+  {
+    "base": "catch",
+    "preterite": "caught",
+    "participle": "caught",
+    "fr": "attraper",
+    "group": 3
+  },
+  {
+    "base": "set",
+    "preterite": "set",
+    "participle": "set",
+    "fr": "placer",
+    "group": 3
+  },
+  {
+    "base": "sting",
+    "preterite": "stung",
+    "participle": "stung",
+    "fr": "piquer",
+    "group": 3
+  },
+  {
+    "base": "begin",
+    "preterite": "began",
+    "participle": "begun",
+    "fr": "commencer",
+    "group": 3
+  },
+  {
+    "base": "shut",
+    "preterite": "shut",
+    "participle": "shut",
+    "fr": "fermer",
+    "group": 4
+  },
+  {
+    "base": "forbid",
+    "preterite": "forbade",
+    "participle": "forbidden",
+    "fr": "interdire",
+    "group": 4
+  },
+  {
+    "base": "go",
+    "preterite": "went",
+    "participle": "gone",
+    "fr": "aller",
+    "group": 4
+  },
+  {
+    "base": "win",
+    "preterite": "won",
+    "participle": "won",
+    "fr": "gagner",
+    "group": 4
+  },
+  {
+    "base": "deal",
+    "preterite": "dealt",
+    "participle": "dealt",
+    "fr": "distribuer, traiter",
+    "group": 4
+  },
+  {
+    "base": "eat",
+    "preterite": "ate",
+    "participle": "eaten",
+    "fr": "manger",
+    "group": 4
+  },
+  {
+    "base": "drive",
+    "preterite": "drove",
+    "participle": "driven",
+    "fr": "conduire",
+    "group": 4
+  },
+  {
+    "base": "lend",
+    "preterite": "lent",
+    "participle": "lent",
+    "fr": "prêter",
+    "group": 4
+  },
+  {
+    "base": "stand",
+    "preterite": "stood",
+    "participle": "stood",
+    "fr": "se tenir debout",
+    "group": 4
+  },
+  {
+    "base": "ring",
+    "preterite": "rang",
+    "participle": "rung",
+    "fr": "sonner",
+    "group": 4
+  },
+  {
+    "base": "weep",
+    "preterite": "wept",
+    "participle": "wept",
+    "fr": "pleurer",
+    "group": 5
+  },
+  {
+    "base": "beat",
+    "preterite": "beat",
+    "participle": "beaten",
+    "fr": "battre",
+    "group": 5
+  },
+  {
+    "base": "sit",
+    "preterite": "sat",
+    "participle": "sat",
+    "fr": "s'asseoir",
+    "group": 5
+  },
+  {
+    "base": "send",
+    "preterite": "sent",
+    "participle": "sent",
+    "fr": "envoyer",
+    "group": 5
+  },
+  {
+    "base": "stick",
+    "preterite": "stuck",
+    "participle": "stuck",
+    "fr": "coller, coincer",
+    "group": 5
+  },
+  {
+    "base": "buy",
+    "preterite": "bought",
+    "participle": "bought",
+    "fr": "acheter",
+    "group": 5
+  },
+  {
+    "base": "burn",
+    "preterite": "burnt",
+    "participle": "burnt",
+    "fr": "brûler",
+    "group": 5
+  },
+  {
+    "base": "seek",
+    "preterite": "sought",
+    "participle": "sought",
+    "fr": "chercher",
+    "group": 5
+  },
+  {
+    "base": "find",
+    "preterite": "found",
+    "participle": "found",
+    "fr": "trouver",
+    "group": 5
+  },
+  {
+    "base": "feel",
+    "preterite": "felt",
+    "participle": "felt",
+    "fr": "(res)sentir",
+    "group": 5
+  },
+  {
+    "base": "spread",
+    "preterite": "spread",
+    "participle": "spread",
+    "fr": "étaler, répandre",
+    "group": 6
+  },
+  {
+    "base": "break",
+    "preterite": "broke",
+    "participle": "broken",
+    "fr": "casser",
+    "group": 6
+  },
+  {
+    "base": "put",
+    "preterite": "put",
+    "participle": "put",
+    "fr": "mettre",
+    "group": 6
+  },
+  {
+    "base": "tear",
+    "preterite": "tore",
+    "participle": "torn",
+    "fr": "déchirer",
+    "group": 6
+  },
+  {
+    "base": "have",
+    "preterite": "had",
+    "participle": "had",
+    "fr": "avoir",
+    "group": 6
+  },
+  {
+    "base": "meet",
+    "preterite": "met",
+    "participle": "met",
+    "fr": "rencontrer",
+    "group": 6
+  },
+  {
+    "base": "light",
+    "preterite": "lit",
+    "participle": "lit",
+    "fr": "allumer",
+    "group": 6
+  },
+  {
+    "base": "think",
+    "preterite": "thought",
+    "participle": "thought",
+    "fr": "penser",
+    "group": 6
+  },
+  {
+    "base": "build",
+    "preterite": "built",
+    "participle": "built",
+    "fr": "construire",
+    "group": 6
+  },
+  {
+    "base": "grind",
+    "preterite": "ground",
+    "participle": "ground",
+    "fr": "moudre",
+    "group": 6
+  },
+  {
+    "base": "spell",
+    "preterite": "spelt",
+    "participle": "spelt",
+    "fr": "épeler",
+    "group": 7
+  },
+  {
+    "base": "draw",
+    "preterite": "drew",
+    "participle": "drawn",
+    "fr": "dessiner",
+    "group": 7
+  },
+  {
+    "base": "bet",
+    "preterite": "bet",
+    "participle": "bet",
+    "fr": "parier",
+    "group": 7
+  },
+  {
+    "base": "sleep",
+    "preterite": "slept",
+    "participle": "slept",
+    "fr": "dormir",
+    "group": 7
+  },
+  {
+    "base": "hide",
+    "preterite": "hid",
+    "participle": "hidden",
+    "fr": "se cacher",
+    "group": 7
+  },
+  {
+    "base": "spit",
+    "preterite": "spat",
+    "participle": "spat",
+    "fr": "cracher",
+    "group": 7
+  },
+  {
+    "base": "hear",
+    "preterite": "heard",
+    "participle": "heard",
+    "fr": "entendre",
+    "group": 7
+  },
+  {
+    "base": "lead",
+    "preterite": "led",
+    "participle": "led",
+    "fr": "mener",
+    "group": 7
+  },
+  {
+    "base": "freeze",
+    "preterite": "froze",
+    "participle": "frozen",
+    "fr": "geler",
+    "group": 7
+  },
+  {
+    "base": "get",
+    "preterite": "got",
+    "participle": "got",
+    "fr": "obtenir",
+    "group": 7
+  },
+  {
+    "base": "lay",
+    "preterite": "laid",
+    "participle": "laid",
+    "fr": "mettre (la table)",
+    "group": 8
+  },
+  {
+    "base": "withdraw",
+    "preterite": "withdrew",
+    "participle": "withdrawn",
+    "fr": "se retirer",
+    "group": 8
+  },
+  {
+    "base": "become",
+    "preterite": "became",
+    "participle": "become",
+    "fr": "devenir",
+    "group": 8
+  },
+  {
+    "base": "shoot",
+    "preterite": "shot",
+    "participle": "shot",
+    "fr": "tirer",
+    "group": 8
+  },
+  {
+    "base": "upset",
+    "preterite": "upset",
+    "participle": "upset",
+    "fr": "contrarier, renverser",
+    "group": 8
+  },
+  {
+    "base": "learn",
+    "preterite": "learnt",
+    "participle": "learnt",
+    "fr": "apprendre",
+    "group": 8
+  },
+  {
+    "base": "fight",
+    "preterite": "fought",
+    "participle": "fought",
+    "fr": "combattre, se battre",
+    "group": 8
+  },
+  {
+    "base": "forgive",
+    "preterite": "forgave",
+    "participle": "forgiven",
+    "fr": "pardonner",
+    "group": 8
+  },
+  {
+    "base": "take",
+    "preterite": "took",
+    "participle": "taken",
+    "fr": "prendre",
+    "group": 8
+  },
+  {
+    "base": "bring",
+    "preterite": "brought",
+    "participle": "brought",
+    "fr": "apporter",
+    "group": 8
+  },
+  {
+    "base": "stink",
+    "preterite": "stank",
+    "participle": "stunk",
+    "fr": "puer",
+    "group": 9
+  },
+  {
+    "base": "read",
+    "preterite": "read",
+    "participle": "read",
+    "fr": "lire",
+    "group": 9
+  },
+  {
+    "base": "grow",
+    "preterite": "grew",
+    "participle": "grown",
+    "fr": "pousser, grandir",
+    "group": 9
+  },
+  {
+    "base": "creep",
+    "preterite": "crept",
+    "participle": "crept",
+    "fr": "ramper",
+    "group": 9
+  },
+  {
+    "base": "see",
+    "preterite": "saw",
+    "participle": "seen",
+    "fr": "voir",
+    "group": 9
+  },
+  {
+    "base": "pay",
+    "preterite": "paid",
+    "participle": "paid",
+    "fr": "payer",
+    "group": 9
+  },
+  {
+    "base": "bite",
+    "preterite": "bit",
+    "participle": "bitten",
+    "fr": "mordre",
+    "group": 9
+  },
+  {
+    "base": "breed",
+    "preterite": "bred",
+    "participle": "bred",
+    "fr": "élever, se reproduire",
+    "group": 9
+  },
+  {
+    "base": "wear",
+    "preterite": "wore",
+    "participle": "worn",
+    "fr": "porter",
+    "group": 9
+  },
+  {
+    "base": "leave",
+    "preterite": "left",
+    "participle": "left",
+    "fr": "partir, quitter",
+    "group": 9
+  },
+  {
+    "base": "choose",
+    "preterite": "chose",
+    "participle": "chosen",
+    "fr": "choisir",
+    "group": 10
+  },
+  {
+    "base": "hold",
+    "preterite": "held",
+    "participle": "held",
+    "fr": "tenir",
+    "group": 10
+  },
+  {
+    "base": "burst",
+    "preterite": "burst",
+    "participle": "burst",
+    "fr": "éclater",
+    "group": 10
+  },
+  {
+    "base": "rise",
+    "preterite": "rose",
+    "participle": "risen",
+    "fr": "s'élever, monter",
+    "group": 10
+  },
+  {
+    "base": "feed",
+    "preterite": "fed",
+    "participle": "fed",
+    "fr": "nourrir",
+    "group": 10
+  },
+  {
+    "base": "cost",
+    "preterite": "cost",
+    "participle": "cost",
+    "fr": "coûter",
+    "group": 10
+  },
+  {
+    "base": "awake",
+    "preterite": "awoke",
+    "participle": "awoken",
+    "fr": "se réveiller",
+    "group": 10
+  },
+  {
+    "base": "cut",
+    "preterite": "cut",
+    "participle": "cut",
+    "fr": "couper",
+    "group": 10
+  },
+  {
+    "base": "arise",
+    "preterite": "arose",
+    "participle": "arisen",
+    "fr": "survenir, surgir",
+    "group": 10
+  },
+  {
+    "base": "show",
+    "preterite": "showed",
+    "participle": "shown",
+    "fr": "montrer",
+    "group": 10
+  },
+  {
+    "base": "make",
+    "preterite": "made",
+    "participle": "made",
+    "fr": "faire",
+    "group": 11
+  },
+  {
+    "base": "lose",
+    "preterite": "lost",
+    "participle": "lost",
+    "fr": "perdre",
+    "group": 11
+  },
+  {
+    "base": "mean",
+    "preterite": "meant",
+    "participle": "meant",
+    "fr": "signifier",
+    "group": 11
+  },
+  {
+    "base": "hurt",
+    "preterite": "hurt",
+    "participle": "hurt",
+    "fr": "blesser",
+    "group": 11
+  },
+  {
+    "base": "sing",
+    "preterite": "sang",
+    "participle": "sung",
+    "fr": "chanter",
+    "group": 11
+  },
+  {
+    "base": "blow",
+    "preterite": "blew",
+    "participle": "blown",
+    "fr": "souffler",
+    "group": 11
+  },
+  {
+    "base": "keep",
+    "preterite": "kept",
+    "participle": "kept",
+    "fr": "garder",
+    "group": 11
+  },
+  {
+    "base": "forget",
+    "preterite": "forgot",
+    "participle": "forgotten",
+    "fr": "oublier",
+    "group": 11
+  },
+  {
+    "base": "ride",
+    "preterite": "rode",
+    "participle": "ridden",
+    "fr": "faire du vélo/cheval",
+    "group": 11
+  },
+  {
+    "base": "hit",
+    "preterite": "hit",
+    "participle": "hit",
+    "fr": "frapper",
+    "group": 11
+  },
+  {
+    "base": "fall",
+    "preterite": "fell",
+    "participle": "fallen",
+    "fr": "tomber",
+    "group": 12
+  },
+  {
+    "base": "swear",
+    "preterite": "swore",
+    "participle": "sworn",
+    "fr": "jurer",
+    "group": 12
+  },
+  {
+    "base": "smell",
+    "preterite": "smelt",
+    "participle": "smelt",
+    "fr": "sentir (odorat)",
+    "group": 12
+  },
+  {
+    "base": "swim",
+    "preterite": "swam",
+    "participle": "swum",
+    "fr": "nager",
+    "group": 12
+  },
+  {
+    "base": "spend",
+    "preterite": "spent",
+    "participle": "spent",
+    "fr": "dépenser, passer",
+    "group": 12
+  },
+  {
+    "base": "shake",
+    "preterite": "shook",
+    "participle": "shaken",
+    "fr": "secouer, trembler",
+    "group": 12
+  },
+  {
+    "base": "wake",
+    "preterite": "woke",
+    "participle": "woken",
+    "fr": "se réveiller",
+    "group": 12
+  },
+  {
+    "base": "understand",
+    "preterite": "understood",
+    "participle": "understood",
+    "fr": "comprendre",
+    "group": 12
+  },
+  {
+    "base": "write",
+    "preterite": "wrote",
+    "participle": "written",
+    "fr": "écrire",
+    "group": 12
+  }
+]
