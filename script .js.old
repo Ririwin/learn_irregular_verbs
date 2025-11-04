@@ -739,7 +739,7 @@ function createRevisionExercise() {
   const pretInput = document.createElement('input');
   pretInput.type = 'text';
   pretInput.id = 'pret-input';
-  pretInput.placeholder = 'ex: ' + correctAnswerPretrite;
+  pretInput.placeholder = '';
   pretInput.style.cssText = 'width:100%;padding:8px;';
   pretDiv.appendChild(pretLabel);
   pretDiv.appendChild(pretInput);
@@ -752,7 +752,7 @@ function createRevisionExercise() {
   const partInput = document.createElement('input');
   partInput.type = 'text';
   partInput.id = 'part-input';
-  partInput.placeholder = 'ex: ' + correctAnswerParticiple;
+  partInput.placeholder = '';
   partInput.style.cssText = 'width:100%;padding:8px;';
   partDiv.appendChild(partLabel);
   partDiv.appendChild(partInput);

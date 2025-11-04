@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verbes Irréguliers - Entraînement avec Progression</title>
+    <title>Verbes Irréguliers - Entraînement</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,12 +12,9 @@
     <!-- Section Sélection -->
     <div id="selection-section" class="container">
         <h2>Sélectionnez les groupes de verbes</h2>
-        
-        <!-- IMPORTANT: Conteneur pour les groupes - DOIT être présent! -->
         <div id="verb-groups-container">
             <!-- Les groupes seront ajoutés dynamiquement par le JS selon le JSON -->
         </div>
-        
         <div class="streak-goal">
             <p>Définissez votre objectif de série de bonnes réponses consécutives :</p>
             <div class="streak-input">

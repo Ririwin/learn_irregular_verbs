@@ -319,7 +319,7 @@ deselectAllBtn.addEventListener('click', () => {
 
 const exportBtn = document.createElement('button');
 exportBtn.className = 'btn';
-exportBtn.textContent = '💾 Statistiques';
+exportBtn.textContent = '💾 Exporter données';
 exportBtn.style.width = '31%';
 exportBtn.style.backgroundColor = '#6c5b7b';
 exportBtn.addEventListener('click', showExportModal);
