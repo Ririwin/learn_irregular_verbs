@@ -1,3 +1,44 @@
+// ========== MODE SOMBRE ========== 
+// À AJOUTER AU DÉBUT DU FICHIER script.js
+
+function initDarkMode() {
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const controlsContainer = document.getElementById('top-right-controls');
+  
+  // On déplace le bouton dans son conteneur fixe
+  if (darkModeToggle && controlsContainer) {
+      controlsContainer.appendChild(darkModeToggle);
+  }
+  
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+  if (savedDarkMode) {
+      document.body.classList.add('dark-mode');
+      if(darkModeToggle) darkModeToggle.textContent = '☀️';
+  } else {
+      document.body.classList.remove('dark-mode');
+      if(darkModeToggle) darkModeToggle.textContent = '🌙';
+  }
+
+  if(darkModeToggle) {
+      darkModeToggle.addEventListener('click', toggleDarkMode);
+  }
+}
+
+function toggleDarkMode() {
+  const darkModeToggle = document.getElementById('dark-mode-toggle');
+  const isDarkMode = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', isDarkMode);
+  darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+  console.log('Dark mode toggled:', isDarkMode);
+}
+
+
+const helpButton = document.getElementById('help-btn');
+if (helpButton) {
+    helpButton.addEventListener('click', showHelpModal);
+}
+
+
 // ========== MODES D'APPRENTISSAGE ==========
 
 let isTimedMode = false;
@@ -132,6 +173,8 @@ let useDifficultMode = false;
 let keyboardListenerAttached = false;
 let globalKeyboardListener = null;
 
+window.addEventListener('load', initDarkMode); // ajout pour mise en route dark
+
 function attachGlobalKeyboardListener() {
   if (keyboardListenerAttached) return;
   globalKeyboardListener = function(event) {
@@ -198,25 +241,28 @@ const scoreElement = document.getElementById('score');
 const totalElement = document.getElementById('total');
 const streakElement = document.getElementById('streak');
 const streakTargetElement = document.getElementById('streak-target');
-const startButton = document.getElementById('start-btn');
+// const startButton = document.getElementById('start-btn');
 const restartButton = document.getElementById('restart-btn');
 const newSessionButton = document.getElementById('new-session-btn');
-const streakGoalInput = document.getElementById('streak-goal');
+// const streakGoalInput = document.getElementById('streak-goal');
 const finalStreakGoalElement = document.getElementById('final-streak-goal');
 const finalScoreElement = document.getElementById('final-score');
 const finalTotalElement = document.getElementById('final-total');
 const finalAccuracyElement = document.getElementById('final-accuracy');
 const groupsContainer = document.getElementById('verb-groups-container');
+let streakGoalInput; // Sera créé dynamiquement
+let startButton; // Sera créé dynamiquement
 
 // ========== INTERFACE DES MODES ==========
 
 const modeOptionsDiv = document.createElement('div');
-modeOptionsDiv.style.cssText = 'background:#f5f5f5;padding:20px;border-radius:8px;margin-bottom:20px;';
+modeOptionsDiv.style.cssText = 'padding:20px;border-radius:8px;margin:15px 0;';
+modeOptionsDiv.classList.add('mode-options-container');
 
 const modeTitle = document.createElement('h3');
 modeTitle.textContent = '⚙️ Options d\'apprentissage';
-modeTitle.style.cssText = 'margin-top:0;color:#333;';
-modeOptionsDiv.appendChild(modeTitle);
+modeTitle.style.cssText = 'margin-top:0;';
+modeTitle.classList.add('mode-title');
 
 // Mode chronométré
 const timedModeDiv = document.createElement('div');
@@ -321,7 +367,7 @@ const exportBtn = document.createElement('button');
 exportBtn.className = 'btn';
 exportBtn.textContent = '💾 Statistiques';
 exportBtn.style.width = '31%';
-exportBtn.style.backgroundColor = '#6c5b7b';
+exportBtn.classList.add('stats-btn-export');
 exportBtn.addEventListener('click', showExportModal);
 
 const difficultModeBtn = document.createElement('button');
@@ -329,15 +375,15 @@ difficultModeBtn.className = 'btn';
 difficultModeBtn.textContent = '⚠️ Verbes difficiles';
 difficultModeBtn.style.width = '48%';
 difficultModeBtn.style.marginRight = '4%';
-difficultModeBtn.style.backgroundColor = '#d97c3a';
-difficultModeBtn.style.display = 'none';
+difficultModeBtn.classList.add('stats-btn-difficult');
+difficultModeBtn.style.display = 'block';
 difficultModeBtn.addEventListener('click', startDifficultMode);
 
 const resetDataBtn = document.createElement('button');
 resetDataBtn.className = 'btn';
 resetDataBtn.textContent = '🗑️ Réinitialiser données';
 resetDataBtn.style.width = '48%';
-resetDataBtn.style.backgroundColor = '#c74545';
+resetDataBtn.classList.add('stats-btn-reset');
 resetDataBtn.style.display = 'none';
 resetDataBtn.addEventListener('click', () => {
   if (confirm('⚠️ Êtes-vous sûr? Cette action est irréversible.')) {
@@ -368,7 +414,51 @@ groupsContainer.parentNode.insertBefore(modeOptionsDiv, groupsContainer);
 groupsContainer.parentNode.insertBefore(difficultModeControlsDiv, groupsContainer);
 groupsContainer.parentNode.insertBefore(selectionControlsDiv, groupsContainer);
 
+// ========== OBJECTIF ET BOUTON COMMENCER ==========
+
+const objectiveDiv = document.createElement('div');
+objectiveDiv.style.cssText = 'margin-top:20px;padding:15px;border-radius:4px;';
+objectiveDiv.classList.add('objective-div');
+
+const objectiveLabel = document.createElement('label');
+objectiveLabel.textContent = '🎯 Objectif : ';
+objectiveLabel.style.cssText = 'font-weight:bold;display:inline-block;margin-right:10px;';
+
+streakGoalInput = document.createElement('input');
+streakGoalInput.type = 'number';
+streakGoalInput.value = '25';
+streakGoalInput.min = '1';
+streakGoalInput.max = '100';
+streakGoalInput.style.cssText = 'width:80px;padding:5px;border:1px solid #999;border-radius:3px;';
+
+const objectiveText = document.createElement('span');
+objectiveText.textContent = ' réponses correctes consécutives';
+
+objectiveDiv.appendChild(objectiveLabel);
+objectiveDiv.appendChild(streakGoalInput);
+objectiveDiv.appendChild(objectiveText);
+selectionSection.appendChild(objectiveDiv);
+
+// Bouton Commencer
+startButton = document.createElement('button');
+startButton.id = 'start-btn';
+startButton.className = 'btn';
+startButton.textContent = '🚀 Commencer';
+startButton.style.cssText = 'width:100%;margin-top:20px;';
+selectionSection.appendChild(startButton);
+
+
 // ========== EXPORT MODAL ==========
+
+function updateDifficultModeButtonVisibility() {
+  const difficultVerbs = progressionSystem.getDifficultVerbs();
+  if (difficultVerbs && difficultVerbs.length > 0) {
+    difficultModeBtn.style.display = 'block';
+  } else {
+    difficultModeBtn.style.display = 'none';
+  }
+}
+
 
 function showExportModal() {
   const rawData = progressionSystem.getRawData();
@@ -379,10 +469,12 @@ function showExportModal() {
   }
 
   const modal = document.createElement('div');
-  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);display:flex;justify-content:center;align-items:center;z-index:1000;';
-
+  modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;z-index:1000;';
+  modal.classList.add('modal-overlay');
+  
   const modalContent = document.createElement('div');
-  modalContent.style.cssText = 'background:white;border-radius:10px;padding:30px;max-width:900px;max-height:85vh;overflow-y:auto;';
+  modalContent.style.cssText = 'border-radius:10px;padding:30px;max-width:900px;max-height:85vh;overflow-y:auto;';
+  modalContent.classList.add('modal-content');
 
   const title = document.createElement('h2');
   title.textContent = '📊 Résumé de progression';
@@ -390,7 +482,9 @@ function showExportModal() {
 
   // Sessions
   const sessionsDiv = document.createElement('div');
-  sessionsDiv.style.cssText = 'background:#e8f4f8;padding:20px;border-radius:8px;margin-bottom:20px;';
+  sessionsDiv.style.cssText = 'padding:20px;border-radius:8px;margin-bottom:20px;';
+  sessionsDiv.classList.add('modal-sessions-div');
+
   const sessionsTitle = document.createElement('h3');
   sessionsTitle.textContent = '📅 Historique';
   sessionsDiv.appendChild(sessionsTitle);
@@ -418,7 +512,9 @@ function showExportModal() {
   const difficultVerbs = progressionSystem.getDifficultVerbs();
   if (difficultVerbs && difficultVerbs.length > 0) {
     const verbsDiv = document.createElement('div');
-    verbsDiv.style.cssText = 'background:#fff3e0;padding:20px;border-radius:8px;margin-bottom:20px;';
+    verbsDiv.style.cssText = 'padding:20px;border-radius:8px;margin-bottom:20px;';
+    verbsDiv.classList.add('modal-difficult-verbs-div');
+
     const verbsTitle = document.createElement('h3');
     verbsTitle.textContent = '⚠️ Verbes à réviser';
     verbsDiv.appendChild(verbsTitle);
@@ -436,7 +532,9 @@ function showExportModal() {
   const globalStats = progressionSystem.getGlobalStats();
   if (globalStats) {
     const statsDiv = document.createElement('div');
-    statsDiv.style.cssText = 'background:#f0f8e8;padding:20px;border-radius:8px;';
+    statsDiv.style.cssText = 'padding:20px;border-radius:8px;';
+    statsDiv.classList.add('modal-global-stats-div');
+	
     const statsTitle = document.createElement('h3');
     statsTitle.textContent = '📈 Global';
     statsDiv.appendChild(statsTitle);
@@ -448,7 +546,9 @@ function showExportModal() {
 
   const closeBtn = document.createElement('button');
   closeBtn.textContent = 'Fermer';
-  closeBtn.style.cssText = 'margin-top:20px;padding:10px 20px;background:#999;color:white;border:none;border-radius:5px;cursor:pointer;';
+  closeBtn.style.cssText = 'margin-top:20px;padding:10px 20px;color:white;border:none;border-radius:5px;cursor:pointer;';
+  closeBtn.classList.add('modal-close-btn');
+
   closeBtn.addEventListener('click', () => document.body.removeChild(modal));
   modalContent.appendChild(closeBtn);
 
@@ -476,6 +576,7 @@ fetch('verbes.json')
       }
     });
     construireCasesGroupesDynamiques();
+	updateDifficultModeButtonVisibility();  // <-- AJOUTEZ CETTE LIGNE
     updateResetButtonVisibility();
   });
 
@@ -520,6 +621,10 @@ function startDifficultMode() {
   useDifficultMode = true;
   const difficultVerbs = progressionSystem.getDifficultVerbs();
   
+  console.log('🔴 DIFFICULT MODE STARTED');
+  console.log('Difficult verbs found:', difficultVerbs.length);
+  console.log('Difficult verbs:', difficultVerbs);
+  
   if (!difficultVerbs || difficultVerbs.length === 0) {
     alert("Aucun verbe difficile identifié.");
     return;
@@ -529,6 +634,9 @@ function startDifficultMode() {
     const fullVerb = verbsData.find(v => v.base === dv.verb);
     return [fullVerb.base, fullVerb.preterite, fullVerb.participle, fullVerb.fr];
   });
+
+  console.log('Active verbs count:', activeVerbs.length);
+  console.log('Active verbs:', activeVerbs);
 
   startExercise();
 }
@@ -561,6 +669,48 @@ startButton.addEventListener('click', function() {
   
   startExercise();
 });
+
+function showHelpModal() {
+  // Crée le fond semi-transparent
+  const modalOverlay = document.createElement('div');
+  modalOverlay.className = 'modal-overlay';
+
+  // Crée le contenu de la fenêtre
+  const modalContent = document.createElement('div');
+  modalContent.className = 'modal-content help-modal-content';
+
+  modalContent.innerHTML = `
+    <h2>💡 Aide et Fonctionnalités</h2>
+    
+    <h3>Modes d'Apprentissage</h3>
+    <p><strong>⏱️ Mode Chronométré :</strong> Chaque question a un temps limité pour y répondre. Pression et rapidité !</p>
+    <p><strong>🔥 Mode Difficile :</strong> Pas d'indice de traduction et les choix de réponse sont plus proches de la bonne réponse pour un défi supplémentaire.</p>
+    <p><strong>📝 Révision Complète :</strong> Au lieu d'un QCM, vous devez écrire les 3 formes du verbe (base, prétérit, participe passé).</p>
+
+    <h3>Raccourcis Clavier</h3>
+    <p><strong>Touches 1, 2, 3, 4 :</strong> Sélectionnez directement une des quatre options de réponse.</p>
+    <p><strong>Touche Entrée :</strong> Validez votre réponse (équivalent au bouton "Vérifier") ou passez à la question suivante.</p>
+
+    <h3>Fonctionnalités Spéciales</h3>
+    <p><strong>⚠️ Verbes difficiles :</strong> Ce bouton apparaît quand l'application détecte que vous faites régulièrement des erreurs sur certains verbes. Cliquez dessus pour lancer une session ciblée sur vos points faibles !</p>
+    <p><strong>Aa (Slider) :</strong> Utilisez le curseur en bas pour ajuster la taille de la police à votre convenance.</p>
+    
+    <button id="close-help-btn" class="btn">Fermer</button>
+  `;
+
+  modalOverlay.appendChild(modalContent);
+  document.body.appendChild(modalOverlay);
+
+  // Ajoute l'événement pour fermer la fenêtre
+  document.getElementById('close-help-btn').addEventListener('click', () => {
+    document.body.removeChild(modalOverlay);
+  });
+  modalOverlay.addEventListener('click', (e) => {
+    if (e.target === modalOverlay) {
+         document.body.removeChild(modalOverlay);
+    }
+  });
+}
 
 function startExercise() {
   selectionSection.style.display = 'none';
@@ -606,8 +756,10 @@ function startTimer() {
     timeRemaining--;
     if (timerDisplay) {
       timerDisplay.textContent = timeRemaining + 's';
-      if (timeRemaining <= 3) {
-        timerDisplay.style.color = '#d32f2f';
+      if (timeRemaining <= 4) {
+        timerDisplay.classList.add('urgent');
+	  } else {
+		 timerDisplay.classList.remove('urgent'); 
       }
     }
     
@@ -640,6 +792,10 @@ function timeoutAnswer() {
 // ========== DISTRACTEURS INTELLIGENTS ==========
 
 function getSimilarOptions(correctOption, allVerbs, count = 3) {
+  console.log('getSimilarOptions called');
+  console.log('correctOption:', correctOption);
+  console.log('allVerbs count:', allVerbs.length);
+	
   const similar = [];
   const correctLength = correctOption.length;
   
@@ -654,8 +810,17 @@ function getSimilarOptions(correctOption, allVerbs, count = 3) {
     }
   }
   
-  return [...new Set(similar)].filter(v => v !== correctOption).slice(0, count);
+  const result = [...new Set(similar)].filter(v => v !== correctOption).slice(0, count);
+  console.log('getSimilarOptions result:', result);
+  return result;
 }
+
+const fontSizeSlider = document.getElementById('font-size-slider');
+fontSizeSlider.addEventListener('input', function() {
+  document.body.style.fontSize = this.value+'px';
+});
+document.body.style.fontSize = fontSizeSlider.value + 'px';
+
 
 // ========== EXERCICES ==========
 
@@ -668,6 +833,12 @@ function createNewExercise() {
   checkButton.style.display = 'block';
   nextButton.style.display = 'none';
   isCheckingAnswer = false;
+  
+  // ✅ NETTOYER L'ANCIEN TIMER
+  const oldTimer = document.getElementById('timer-display');
+  if (oldTimer) oldTimer.remove(); // On garde ça pour l'instant, c'est plus simple
+
+  stopTimer(); 
   
   currentVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
   
@@ -700,12 +871,19 @@ function createNewExercise() {
 }
 
 function createTimerDisplay() {
+  const controlsContainer = document.getElementById('top-right-controls');
+  if (!controlsContainer) return; // Sécurité
+
   const timerDisplay = document.createElement('div');
   timerDisplay.id = 'timer-display';
-  timerDisplay.style.cssText = 'position:absolute;top:10px;right:20px;font-size:24px;font-weight:bold;color:#4a6fa5;';
+  timerDisplay.classList.add('timer-display');
   timerDisplay.textContent = timerDuration + 's';
-  exerciseSection.appendChild(timerDisplay);
+    
+  // Ajoute le timer au début du conteneur
+  controlsContainer.prepend(timerDisplay);
 }
+
+
 
 function createRevisionExercise() {
   const verbText = cleanTranslateTags(currentVerb[0]);
@@ -727,7 +905,9 @@ function createRevisionExercise() {
   baseInput.type = 'text';
   baseInput.value = verbText;
   baseInput.disabled = true;
-  baseInput.style.cssText = 'width:100%;padding:8px;background:#e8e8e8;';
+  baseInput.style.cssText = 'width:100%;padding:8px;';
+  baseInput.classList.add('base-input-disabled');
+
   baseDiv.appendChild(baseLabel);
   baseDiv.appendChild(baseInput);
   container.appendChild(baseDiv);
@@ -762,6 +942,12 @@ function createRevisionExercise() {
 }
 
 function createFormExercise() {
+
+  console.log('🟢 createFormExercise called');
+  console.log('useDifficultMode:', useDifficultMode);
+  console.log('isHardMode:', isHardMode);
+  console.log('currentVerb:', currentVerb);
+
   const askForPast = Math.random() > 0.5;
   const formIndex = askForPast ? 1 : 2;
   correctAnswer = currentVerb[formIndex];
@@ -777,19 +963,45 @@ function createFormExercise() {
   optionsDiv.className = 'options';
   
   let options = [correctAnswer];
+  console.log('Initial options:', options);
   
+  // ✅ EN MODE DIFFICILE: ajouter l'AUTRE FORME du même verbe
+  if (useDifficultMode) {
+    const otherFormIndex = formIndex === 1 ? 2 : 1;
+    const otherForm = currentVerb[otherFormIndex];
+    if (!options.includes(otherForm)) {
+      options.push(otherForm);
+    }
+  }
+  console.log('Options after difficultMode:', options);
+  
+  // ✅ Remplir les 4 options CORRECTEMENT
   if (isHardMode) {
     const similar = getSimilarOptions(correctAnswer, activeVerbs, 3);
-    options = options.concat(similar);
+	console.log('isHardMode -> similar options from getSimilarOptions:', similar);
+    options = options.concat(similar).slice(0, 4);  // ← AVEC .slice(0, 4) ICI!!!
+	console.log('Final options after slice:', options);
   } else {
+	let loopCount = 0;  // <-- DÉFINI ici!  
     while (options.length < 4) {
+	  loopCount++;
+      if (loopCount > 100) {
+        console.error('⚠️ BOUCLE INFINIE DÉTECTÉE DANS createFormExercise!');
+        console.error('activeVerbs:', activeVerbs);
+        console.error('currentVerb:', currentVerb);
+        break;
+      }
       const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
       if (randomVerb !== currentVerb) {
         const wrongOption = randomVerb[formIndex];
         if (!options.includes(wrongOption)) options.push(wrongOption);
+		console.log(`Added option: ${wrongOption}, now ${options.length}/4`);
       }
     }
   }
+  
+  console.log('Final options to display:', options);
+  console.log('='.repeat(50));
   
   options.sort(() => Math.random() - 0.5);
   
@@ -841,6 +1053,7 @@ function createEnglishToFrenchExercise() {
   optionsDiv.className = 'options';
   
   let options = [correctAnswer];
+  let loopCount = 0;  // <-- DÉFINI ici!
   while (options.length < 4) {
     const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
     if (randomVerb !== currentVerb && !options.includes(randomVerb[3])) {
@@ -874,6 +1087,7 @@ function createFrenchToEnglishExercise() {
   optionsDiv.className = 'options';
   
   let options = [correctAnswer];
+  let loopCount = 0;
   while (options.length < 4) {
     const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
     if (randomVerb !== currentVerb && !options.includes(randomVerb[0])) {
@@ -920,11 +1134,8 @@ function checkAnswer() {
     pretInput.disabled = true;
     partInput.disabled = true;
     
-    pretInput.style.borderColor = pretCorrect ? '#58a700' : '#ff4b4b';
-    pretInput.style.backgroundColor = pretCorrect ? '#eaf7d8' : '#ffdbdb';
-    
-    partInput.style.borderColor = partCorrect ? '#58a700' : '#ff4b4b';
-    partInput.style.backgroundColor = partCorrect ? '#eaf7d8' : '#ffdbdb';
+    if (pretCorrect) pretInput.classList.add('input-correct'); else pretInput.classList.add('input-incorrect');
+    if (partCorrect) partInput.classList.add('input-correct'); else partInput.classList.add('input-incorrect');
     
     progressionSystem.recordAttempt(currentVerb[0], isCorrect);
     totalQuestions++;
@@ -963,8 +1174,7 @@ function checkAnswer() {
       isCorrect = possibleAnswers.includes(userAnswer);
       
       textInput.disabled = true;
-      textInput.style.borderColor = isCorrect ? '#58a700' : '#ff4b4b';
-      textInput.style.backgroundColor = isCorrect ? '#eaf7d8' : '#ffdbdb';
+	  if (isCorrect) textInput.classList.add('input-correct'); else textInput.classList.add('input-incorrect');
     }
   } else {
     const selected = document.querySelector('.option.selected');
@@ -998,9 +1208,10 @@ function checkAnswer() {
     vf.className = 'verb-forms';
     vf.style.marginTop = '15px';
     vf.style.padding = '10px';
-    vf.style.backgroundColor = '#f0f8e8';
+    vf.classList.add('verb-forms-correct');
     vf.style.borderRadius = '5px';
     vf.innerHTML = `Formes: ${currentVerb[0]} → ${currentVerb[1]} → ${currentVerb[2]}`;
+	vf.classList.add('verb-forms-feedback');
     feedbackContainer.appendChild(vf);
     
     if (streak >= streakGoal) {
@@ -1019,9 +1230,10 @@ function checkAnswer() {
     vf.className = 'verb-forms';
     vf.style.marginTop = '15px';
     vf.style.padding = '10px';
-    vf.style.backgroundColor = '#ffe8e8';
+    vf.classList.add('verb-forms-incorrect');
     vf.style.borderRadius = '5px';
     vf.innerHTML = `Formes: ${currentVerb[0]} → ${currentVerb[1]} → ${currentVerb[2]}`;
+	vf.classList.add('verb-forms-feedback');
     feedbackContainer.appendChild(vf);
   }
   
@@ -1063,7 +1275,7 @@ function newSession() {
   completionSection.style.display = 'none';
   selectionSection.style.display = 'block';
   useDifficultMode = false;
-  
+  updateDifficultModeButtonVisibility();  // <-- AJOUTEZ CETTE LIGNE
   isTimedMode = false;
   isHardMode = false;
   isRevisionMode = false;
@@ -1075,8 +1287,14 @@ function newSession() {
 }
 
 function nextQuestion() {
-  createNewExercise();
+    const controlsContainer = document.getElementById('top-right-controls');
+    if (controlsContainer) {
+        const timer = document.getElementById('timer-display');
+        if (timer) timer.remove();
+    }
+    createNewExercise();
 }
+
 
 checkButton.addEventListener('click', checkAnswer);
 nextButton.addEventListener('click', nextQuestion);
