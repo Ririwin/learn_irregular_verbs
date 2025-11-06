@@ -28,6 +28,7 @@
   --feedback-correct-text-light: #155724;
   --feedback-incorrect-bg-light: #f8d7da;
   --feedback-incorrect-text-light: #721c24;
+  
 
   /* Couleurs Mode Sombre */
   --bg-color-dark: #121212;
@@ -47,6 +48,9 @@
   --feedback-correct-text-dark: #d1fae5;
   --feedback-incorrect-bg-dark: #991b1b;
   --feedback-incorrect-text-dark: #fecaca;
+  
+  --font-size-base: 16px; /* Valeur par défaut */
+  
 }
 
 /* ============================================================
@@ -62,6 +66,7 @@ html {
 
 body {
   font-family: var(--font-family-base);
+  font-size: var(--font-size-base);
   margin: 0;
   padding: clamp(1rem, 2.5vw, 2rem);
   background-color: var(--bg-color-light);
@@ -69,14 +74,17 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+
 h1, h2, h3 {
   color: var(--primary-color-light);
   margin-bottom: 1rem;
 }
 
-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
-h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
+
+h1 { font-size: clamp(calc(var(--font-size-base) * 1.5), 4vw, calc(var(--font-size-base) * 1.6)); }
+h2 { font-size: clamp(calc(var(--font-size-base) * 1.25), 3.5vw, calc(var(--font-size-base) * 1.3)); }
+h3 { font-size: clamp(var(--font-size-base), 3vw, calc(var(--font-size-base) * 1.15)); }
+
 
 /* ============================================================
    3. CONTENEURS & SECTIONS
@@ -104,21 +112,34 @@ h3 { font-size: clamp(1.25rem, 3vw, 1.5rem); }
 /* ============================================================
    4. BOUTONS & ÉLÉMENTS INTERACTIFS
    ============================================================ */
+/* DANS VOTRE style.css */
+
 .btn {
   display: inline-block;
-  width: 100%;
-  padding: 0.75rem 1.5rem;
-  margin: 0.5rem 0;
-  font-size: 1rem;
   font-weight: 600;
   text-align: center;
-  border-radius: 6px;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.25rem;
+  font-size: var(--font-size-base); 
+  line-height: 1.5;
+  border-radius: 8px;
+  text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease;
-  border: none;
+  transition: all 0.15s ease-in-out;
   background-color: var(--primary-color-light);
-  color: white;
+  color: #ffffff;
+  font-family: inherit;
+  margin: 5px;
+
+  /* Pour le responsive sur mobile */
+  word-break: break-word;
+  white-space: normal;
+  line-height: 1.2;
 }
+
 
 .btn:hover {
   transform: translateY(-2px);
@@ -509,6 +530,24 @@ body.dark-mode .help-modal-content strong {
         overflow: hidden;
         text-overflow: ellipsis; /* Ajoute "..." si le texte est trop long */
     }
+	/* Cible les conteneurs des boutons de la page d'accueil */
+	.selection-controls, .difficult-mode-controls {
+		display: flex;
+		flex-wrap: wrap; /* TRÈS IMPORTANT : permet aux boutons de passer à la ligne */
+		gap: 10px;
+	}
+
+	.selection-controls .btn, 
+	.difficult-mode-controls .btn {
+		flex: 1 1 120px; /* Permet aux boutons de grandir mais avec une base de 120px */
+		padding: 10px 5px; /* On réduit un peu le padding horizontal pour gagner de la place */
+	}
+	
+	/* Cible les boutons de la page d'exercice (Vérifier/Suivant) */
+	#check-btn, #next-btn {
+		width: 100%; /* Ils prendront toute la largeur sur mobile */
+		box-sizing: border-box; /* Pour que le padding ne les fasse pas déborder */
+	}
 }
 
 
@@ -641,4 +680,147 @@ body.dark-mode .bottom-floating-controls #help-btn:hover {
 body.dark-mode .font-size-container {
     background-color: var(--surface-color-dark);
     border-color: var(--border-color-dark);
+}
+
+/* AJOUTEZ CECI À LA FIN DE VOTRE style.css */
+
+.extra-info {
+    font-size: 0.9em;
+    color: var(--text-secondary-light);
+    border-top: 1px solid var(--border-color-light);
+    padding-top: 10px;
+    margin-top: 15px;
+}
+
+.phonetic {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--secondary-color-light);
+}
+
+.example-sentence {
+    color: var(--primary-color-light);
+}
+
+/* --- Styles pour le mode sombre --- */
+body.dark-mode .extra-info {
+    color: var(--text-secondary-dark);
+    border-top-color: var(--border-color-dark);
+}
+
+body.dark-mode .phonetic {
+    color: var(--secondary-color-dark);
+}
+
+body.dark-mode .example-sentence {
+    color: var(--primary-color-dark);
+}
+
+/* STYLES POUR LE BOUTON DE LECTURE PHONÉTIQUE */
+
+.phonetic-playback {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+}
+
+.phonetic-playback:hover {
+    transform: scale(1.1); /* Effet de zoom au survol */
+}
+
+.phonetic-text {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--secondary-color-light);
+}
+
+.speaker-icon {
+    font-size: 1.1em;
+}
+
+/* --- Styles pour le mode sombre --- */
+body.dark-mode .phonetic-text {
+    color: var(--secondary-color-dark);
+}
+/* ============================================================
+   STYLES POUR L'AFFICHAGE DU SCORE
+   ============================================================ */
+
+#score-text {
+    width: 100%;
+}
+
+.score-display {
+    display: flex;
+    justify-content: center; /* Centre les boîtes */
+    align-items: stretch;
+    gap: 15px; /* Espace entre les boîtes */
+    width: 100%;
+}
+
+.score-box {
+    flex: 1; /* Chaque boîte prend une part égale de l'espace */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: var(--surface-color-light);
+    border: 1px solid var(--border-color-light);
+    text-align: center;
+}
+
+.score-box .icon {
+    font-size: 1.5em; /* Icône plus grande */
+    margin-bottom: 5px;
+}
+
+.score-box .label {
+    font-size: 0.8em;
+    text-transform: uppercase;
+    color: var(--text-secondary-light);
+    font-weight: 600;
+}
+
+.score-box .value {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: var(--text-color-light);
+}
+
+/* --- Styles pour le mode sombre --- */
+body.dark-mode .score-box {
+    background-color: var(--surface-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+body.dark-mode .score-box .label {
+    color: var(--text-secondary-dark);
+}
+
+body.dark-mode .score-box .value {
+    color: var(--text-color-dark);
+}
+
+/* --- Responsive pour mobile --- */
+@media (max-width: 480px) {
+    .score-display {
+        flex-direction: column; /* Passe en colonne sur les très petits écrans */
+    }
+    
+    .score-box {
+        flex-direction: row; /* En ligne pour gagner de la place en hauteur */
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .score-box .label {
+        display: none; /* On cache le label pour gagner de la place */
+    }
+    
+    .score-box .value {
+        margin-left: auto; /* Pousse la valeur à droite */
+    }
 }

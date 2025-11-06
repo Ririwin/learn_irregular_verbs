@@ -166,7 +166,7 @@ let correctAnswerParticiple = "";
 let score = 0;
 let totalQuestions = 0;
 let streak = 0;
-let streakGoal = 25;
+let streakGoal = 5;
 let selectedGroups = [];
 let isCheckingAnswer = false;
 let useDifficultMode = false;
@@ -426,8 +426,8 @@ objectiveLabel.style.cssText = 'font-weight:bold;display:inline-block;margin-rig
 
 streakGoalInput = document.createElement('input');
 streakGoalInput.type = 'number';
-streakGoalInput.value = '25';
-streakGoalInput.min = '1';
+streakGoalInput.value = '5';
+streakGoalInput.min = '2';
 streakGoalInput.max = '100';
 streakGoalInput.style.cssText = 'width:80px;padding:5px;border:1px solid #999;border-radius:3px;';
 
@@ -457,6 +457,29 @@ function updateDifficultModeButtonVisibility() {
   } else {
     difficultModeBtn.style.display = 'none';
   }
+}
+
+function nextExercise() {
+    currentVerbIndex++;
+    if (currentVerbIndex < currentVerbs.length) {
+        displayQuestion();
+    } else {
+        // L'exercice est terminé, on peut afficher un résumé
+        exerciseSection.style.display = 'none';
+        completionSection.style.display = 'block';
+
+        const score = currentVerbs.filter(v => v.isCorrect).length;
+        const total = currentVerbs.length;
+        const accuracy = total > 0 ? (score / total) * 100 : 0;
+
+        document.getElementById('final-score').textContent = score;
+        document.getElementById('total-questions').textContent = total;
+        document.getElementById('accuracy-percent').textContent = accuracy.toFixed(0);
+
+        // Enregistrer la session
+        const groupsUsed = Array.from(document.querySelectorAll('input[name="verb-group"]:checked')).map(cb => parseInt(cb.value));
+        progressionSystem.recordSession(score, total, accuracy, groupsUsed, 0); // Le '0' est pour la série, à ajuster si vous avez cette logique
+    }
 }
 
 
@@ -570,10 +593,10 @@ fetch('verbes.json')
     const maxGroup = Math.max(...verbsData.map(v => v.group || 1));
     groups = Array.from({length: maxGroup}, () => []);
     verbsData.forEach(v => {
-      const groupIndex = (v.group || 1) - 1;
-      if (groupIndex >= 0 && groupIndex < groups.length) {
-        groups[groupIndex].push([v.base, v.preterite, v.participle, v.fr]);
-      }
+    const groupIndex = (v.group || 1) - 1;
+    if (groupIndex >= 0 && groupIndex < groups.length) {
+        groups[groupIndex].push(v); 
+    }
     });
     construireCasesGroupesDynamiques();
 	updateDifficultModeButtonVisibility();  // <-- AJOUTEZ CETTE LIGNE
@@ -652,7 +675,7 @@ startButton.addEventListener('click', function() {
     return;
   }
   
-  streakGoal = parseInt(streakGoalInput.value) || 25;
+  streakGoal = parseInt(streakGoalInput.value) || 5;
   selectedGroups = groupCheckboxes.map(cb => cb.checked);
   
   activeVerbs = [];
@@ -771,7 +794,7 @@ function startTimer() {
 }
 
 function timeoutAnswer() {
-  progressionSystem.recordAttempt(currentVerb[0], false);
+  progressionSystem.recordAttempt(currentVerb.base, false);
   totalQuestions++;
   streak = 0;
   
@@ -800,7 +823,7 @@ function getSimilarOptions(correctOption, allVerbs, count = 3) {
   const correctLength = correctOption.length;
   
   for (let verb of allVerbs) {
-    if (verb[0] === currentVerb[0]) continue;
+    if (verb[0] === currentVerb.base) continue;
     const form1 = verb[1];
     const form2 = verb[2];
     
@@ -815,14 +838,54 @@ function getSimilarOptions(correctOption, allVerbs, count = 3) {
   return result;
 }
 
-const fontSizeSlider = document.getElementById('font-size-slider');
-fontSizeSlider.addEventListener('input', function() {
-  document.body.style.fontSize = this.value+'px';
-});
-document.body.style.fontSize = fontSizeSlider.value + 'px';
+// const fontSizeSlider = document.getElementById('font-size-slider');
+// fontSizeSlider.addEventListener('input', function() {
+//   document.body.style.fontSize = this.value+'px';
+// });
+// document.body.style.fontSize = fontSizeSlider.value + 'px';
 
+
+// REMPLACEZ VOTRE ANCIEN CODE DU SLIDER PAR CELUI-CI
+// Mettez-le de préférence à la fin du script, juste avant la dernière ligne "init();"
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const slider = document.getElementById('font-size-slider');
+    const root = document.documentElement; // On cible l'élément racine <html>
+
+    // Au chargement, on applique la taille sauvegardée s'il y en a une
+    const savedSize = localStorage.getItem('fontSize');
+    if (savedSize) {
+        root.style.setProperty('--font-size-base', savedSize + 'px');
+        slider.value = savedSize;
+    } else {
+        // Appliquer la valeur par défaut du slider si rien n'est sauvegardé
+        root.style.setProperty('--font-size-base', slider.value + 'px');
+    }
+
+    // Quand on bouge le slider
+    slider.addEventListener('input', (e) => {
+        const newSize = e.target.value;
+        // On met à jour la variable CSS
+        root.style.setProperty('--font-size-base', newSize + 'px');
+        // On sauvegarde la nouvelle taille pour les prochaines visites
+        localStorage.setItem('fontSize', newSize);
+    });
+
+});
+
+
+// ===================================================================
+// UTILITIES
+// ===================================================================
+
+function cleanTranslateTags(text) {
+  if (typeof text !== 'string') return text;
+  return text.replace(/\[translate:(.*?)\]/g, '$1');
+}
 
 // ========== EXERCICES ==========
+
 
 function createNewExercise() {
   stopTimer();
@@ -886,11 +949,11 @@ function createTimerDisplay() {
 
 
 function createRevisionExercise() {
-  const verbText = cleanTranslateTags(currentVerb[0]);
-  correctAnswerPretrite = currentVerb[1];
-  correctAnswerParticiple = currentVerb[2];
+  const verbText = cleanTranslateTags(currentVerb.base);
+  correctAnswerPretrite = currentVerb.preterite;
+  correctAnswerParticiple = currentVerb.participle;
   
-  questionElement.textContent = `Complétez les 3 formes du verbe "${verbText}" (${currentVerb[3]})`;
+  questionElement.textContent = `Complétez les 3 formes du verbe "${verbText}" (${currentVerb.fr})`;
   
   const container = answerContainer;
   container.style.display = 'grid';
@@ -919,7 +982,7 @@ function createRevisionExercise() {
   const pretInput = document.createElement('input');
   pretInput.type = 'text';
   pretInput.id = 'pret-input';
-  pretInput.placeholder = 'ex: ' + correctAnswerPretrite;
+  pretInput.placeholder = '';
   pretInput.style.cssText = 'width:100%;padding:8px;';
   pretDiv.appendChild(pretLabel);
   pretDiv.appendChild(pretInput);
@@ -932,7 +995,7 @@ function createRevisionExercise() {
   const partInput = document.createElement('input');
   partInput.type = 'text';
   partInput.id = 'part-input';
-  partInput.placeholder = 'ex: ' + correctAnswerParticiple;
+  partInput.placeholder = '';
   partInput.style.cssText = 'width:100%;padding:8px;';
   partDiv.appendChild(partLabel);
   partDiv.appendChild(partInput);
@@ -941,307 +1004,349 @@ function createRevisionExercise() {
   setTimeout(() => document.getElementById('pret-input').focus(), 100);
 }
 
+// REMPLACEZ VOTRE ANCIENNE FONCTION createFormExercise PAR CELLE-CI
+
 function createFormExercise() {
+    console.log('🟢 createFormExercise called');
+    console.log('useDifficultMode:', useDifficultMode);
+    console.log('isHardMode:', isHardMode);
+    console.log('currentVerb:', currentVerb);
 
-  console.log('🟢 createFormExercise called');
-  console.log('useDifficultMode:', useDifficultMode);
-  console.log('isHardMode:', isHardMode);
-  console.log('currentVerb:', currentVerb);
+    const askForPast = Math.random() > 0.5;
+    
+    // --- CORRECTION MAJEURE ICI ---
+    // On accède aux propriétés par leur nom, pas par un indice.
+    correctAnswer = askForPast ? currentVerb.preterite : currentVerb.participle;
 
-  const askForPast = Math.random() > 0.5;
-  const formIndex = askForPast ? 1 : 2;
-  correctAnswer = currentVerb[formIndex];
-  
-  const verbText = cleanTranslateTags(currentVerb[0]);
+  const verbText = cleanTranslateTags(currentVerb.base);
   const question = isHardMode 
     ? `Quel est le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}"?`
-    : `Quel est le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}" (${currentVerb[3]})?`;
+    : `Quel est le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}" (${currentVerb.fr})?`;
   
   questionElement.textContent = question;
-  
-  const optionsDiv = document.createElement('div');
-  optionsDiv.className = 'options';
-  
-  let options = [correctAnswer];
-  console.log('Initial options:', options);
-  
-  // ✅ EN MODE DIFFICILE: ajouter l'AUTRE FORME du même verbe
-  if (useDifficultMode) {
-    const otherFormIndex = formIndex === 1 ? 2 : 1;
-    const otherForm = currentVerb[otherFormIndex];
-    if (!options.includes(otherForm)) {
-      options.push(otherForm);
+
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+    let options = [correctAnswer];
+
+    console.log('Initial options:', options);
+
+    // ✅ EN MODE DIFFICILE: ajouter l'AUTRE FORME du même verbe
+    if (useDifficultMode) {
+        // --- CORRECTION ICI AUSSI ---
+        const otherForm = askForPast ? currentVerb.participle : currentVerb.preterite;
+        if (!options.includes(otherForm)) {
+            options.push(otherForm);
+        }
     }
-  }
-  console.log('Options after difficultMode:', options);
-  
-  // ✅ Remplir les 4 options CORRECTEMENT
-  if (isHardMode) {
-    const similar = getSimilarOptions(correctAnswer, activeVerbs, 3);
-	console.log('isHardMode -> similar options from getSimilarOptions:', similar);
-    options = options.concat(similar).slice(0, 4);  // ← AVEC .slice(0, 4) ICI!!!
-	console.log('Final options after slice:', options);
-  } else {
-	let loopCount = 0;  // <-- DÉFINI ici!  
-    while (options.length < 4) {
-	  loopCount++;
-      if (loopCount > 100) {
-        console.error('⚠️ BOUCLE INFINIE DÉTECTÉE DANS createFormExercise!');
-        console.error('activeVerbs:', activeVerbs);
-        console.error('currentVerb:', currentVerb);
-        break;
-      }
-      const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
-      if (randomVerb !== currentVerb) {
-        const wrongOption = randomVerb[formIndex];
-        if (!options.includes(wrongOption)) options.push(wrongOption);
-		console.log(`Added option: ${wrongOption}, now ${options.length}/4`);
-      }
+
+    console.log('Options after difficultMode:', options);
+    
+    // ✅ Remplir les 4 options CORRECTEMENT
+    if (isHardMode) {
+        const similar = getSimilarOptions(correctAnswer, activeVerbs, 3);
+        console.log('isHardMode -> similar options from getSimilarOptions:', similar);
+        options = options.concat(similar).slice(0, 4);
+        console.log('Final options after slice:', options);
+    } else {
+        let loopCount = 0;
+        while (options.length < 4) {
+            loopCount++;
+            if (loopCount > 100) {
+                console.error('⚠️ BOUCLE INFINIE DÉTECTÉE DANS createFormExercise!');
+                console.error('activeVerbs:', activeVerbs);
+                console.error('currentVerb:', currentVerb);
+                break;
+            }
+
+            const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+            
+            // --- CORRECTION ICI AUSSI ---
+            if (randomVerb.base !== currentVerb.base) {
+                // On choisit la même forme (prétérit/participe) que la question
+                const wrongOption = askForPast ? randomVerb.preterite : randomVerb.participle;
+                if (!options.includes(wrongOption)) {
+                    options.push(wrongOption);
+                }
+                console.log(`Added option: ${wrongOption}, now ${options.length}/4`);
+            }
+        }
     }
-  }
-  
-  console.log('Final options to display:', options);
-  console.log('='.repeat(50));
-  
-  options.sort(() => Math.random() - 0.5);
-  
-  options.forEach((option, index) => {
-    const btn = document.createElement('div');
-    btn.className = 'option';
-    btn.textContent = option;
-    btn.addEventListener('click', function() {
-      const selected = document.querySelector('.option.selected');
-      if (selected) selected.classList.remove('selected');
-      this.classList.add('selected');
+
+    console.log('Final options to display:', options);
+    console.log('='.repeat(50));
+    
+    options.sort(() => Math.random() - 0.5);
+
+    options.forEach((option, index) => {
+        const btn = document.createElement('div');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.addEventListener('click', function() {
+            const selected = document.querySelector('.option.selected');
+            if (selected) selected.classList.remove('selected');
+            this.classList.add('selected');
+        });
+        optionsDiv.appendChild(btn);
     });
-    optionsDiv.appendChild(btn);
-  });
-  
-  answerContainer.appendChild(optionsDiv);
+    answerContainer.appendChild(optionsDiv);
 }
+
+
+// REMPLACEZ VOTRE FONCTION createFormInputExercise PAR CELLE-CI
 
 function createFormInputExercise() {
-  const askForPast = Math.random() > 0.5;
-  const formIndex = askForPast ? 1 : 2;
-  correctAnswer = currentVerb[formIndex];
+    const askForPast = Math.random() > 0.5;
+
+    // --- CORRECTION MAJEURE ICI ---
+    // On définit correctAnswer en utilisant les propriétés de l'objet
+    correctAnswer = askForPast ? currentVerb.preterite : currentVerb.participle;
+
+	const verbText = cleanTranslateTags(currentVerb.base);
+	const question = isHardMode
+		? `Écrivez le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}":`
+		: `Écrivez le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}" (${currentVerb.fr}):`;
   
-  const verbText = cleanTranslateTags(currentVerb[0]);
-  const question = isHardMode
-    ? `Écrivez le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}":`
-    : `Écrivez le ${askForPast ? 'prétérit' : 'participe passé'} du verbe "${verbText}" (${currentVerb[3]}):`;
-  
-  questionElement.textContent = question;
-  
-  const input = document.createElement('input');
-  input.type = 'text';
-  input.className = 'input-answer';
-  input.placeholder = 'Votre réponse...';
-  input.id = 'text-answer';
-  input.autocomplete = 'off';
-  
-  answerContainer.appendChild(input);
-  setTimeout(() => input.focus(), 100);
+	questionElement.textContent = question;
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'input-answer'; // Assurez-vous d'avoir un style pour cette classe
+    input.placeholder = 'Votre réponse...';
+    input.id = 'text-answer';
+    input.autocomplete = 'off';
+    
+    answerContainer.appendChild(input);
+    setTimeout(() => input.focus(), 100);
 }
 
+
 function createEnglishToFrenchExercise() {
-  correctAnswer = currentVerb[3];
-  const verbText = cleanTranslateTags(currentVerb[0]);
+    correctAnswer = currentVerb.fr;
+    const verbText = cleanTranslateTags(currentVerb.base);
   
-  questionElement.textContent = `Comment se dit "${verbText}" en français?`;
-  
-  const optionsDiv = document.createElement('div');
-  optionsDiv.className = 'options';
-  
-  let options = [correctAnswer];
-  let loopCount = 0;  // <-- DÉFINI ici!
-  while (options.length < 4) {
-    const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
-    if (randomVerb !== currentVerb && !options.includes(randomVerb[3])) {
-      options.push(randomVerb[3]);
+	questionElement.textContent = `Comment se dit "${verbText}" en français?`;
+
+
+    const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+    let options = [correctAnswer];
+    
+    let loopCount = 0;
+    while (options.length < 4) {
+        loopCount++;
+        if (loopCount > 100) break; // Sécurité
+
+        const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+        
+        // --- CORRECTION ICI ---
+        // On compare la base du verbe et on ajoute la traduction française (.fr)
+        if (randomVerb.base !== currentVerb.base && !options.includes(randomVerb.fr)) {
+            options.push(randomVerb.fr);
+        }
     }
-  }
-  
-  options.sort(() => Math.random() - 0.5);
-  
-  options.forEach((option, index) => {
-    const btn = document.createElement('div');
-    btn.className = 'option';
-    btn.textContent = option;
-    btn.addEventListener('click', function() {
-      const selected = document.querySelector('.option.selected');
-      if (selected) selected.classList.remove('selected');
-      this.classList.add('selected');
+
+    options.sort(() => Math.random() - 0.5);
+    options.forEach(option => {
+        const btn = document.createElement('div');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.addEventListener('click', function() {
+            const selected = document.querySelector('.option.selected');
+            if (selected) selected.classList.remove('selected');
+            this.classList.add('selected');
+        });
+        optionsDiv.appendChild(btn);
     });
-    optionsDiv.appendChild(btn);
-  });
-  
-  answerContainer.appendChild(optionsDiv);
+    answerContainer.appendChild(optionsDiv);
 }
 
 function createFrenchToEnglishExercise() {
-  correctAnswer = currentVerb[0];
+    correctAnswer = currentVerb.base;
+    questionElement.textContent = `Comment se dit "${currentVerb.fr}" en anglais?`;
   
-  questionElement.textContent = `Comment se dit "${currentVerb[3]}" en anglais?`;
-  
-  const optionsDiv = document.createElement('div');
-  optionsDiv.className = 'options';
-  
-  let options = [correctAnswer];
-  let loopCount = 0;
-  while (options.length < 4) {
-    const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
-    if (randomVerb !== currentVerb && !options.includes(randomVerb[0])) {
-      options.push(randomVerb[0]);
+	const optionsDiv = document.createElement('div');
+    optionsDiv.className = 'options';
+    let options = [correctAnswer];
+    
+    let loopCount = 0;
+    while (options.length < 4) {
+        loopCount++;
+        if (loopCount > 100) break; // Sécurité
+        
+        const randomVerb = activeVerbs[Math.floor(Math.random() * activeVerbs.length)];
+        
+        // --- CORRECTION ICI ---
+        // On compare la base du verbe et on ajoute la base anglaise (.base)
+        if (randomVerb.base !== currentVerb.base && !options.includes(randomVerb.base)) {
+            options.push(randomVerb.base);
+        }
     }
-  }
-  
-  options.sort(() => Math.random() - 0.5);
-  
-  options.forEach((option, index) => {
-    const btn = document.createElement('div');
-    btn.className = 'option';
-    btn.textContent = option;
-    btn.addEventListener('click', function() {
-      const selected = document.querySelector('.option.selected');
-      if (selected) selected.classList.remove('selected');
-      this.classList.add('selected');
+
+    options.sort(() => Math.random() - 0.5);
+    options.forEach(option => {
+        const btn = document.createElement('div');
+        btn.className = 'option';
+        btn.textContent = option;
+        btn.addEventListener('click', function() {
+            const selected = document.querySelector('.option.selected');
+            if (selected) selected.classList.remove('selected');
+            this.classList.add('selected');
+        });
+        optionsDiv.appendChild(btn);
     });
-    optionsDiv.appendChild(btn);
-  });
-  
-  answerContainer.appendChild(optionsDiv);
+    answerContainer.appendChild(optionsDiv);
 }
 
+// REMPLACEZ VOTRE ANCIENNE FONCTION checkAnswer PAR CELLE-CI
+
 function checkAnswer() {
-  stopTimer();
-  
-  let isCorrect = false;
-  
-  if (isRevisionMode) {
-    const pretInput = document.getElementById('pret-input');
-    const partInput = document.getElementById('part-input');
-    
-    const pretAnswer = pretInput.value.trim().toLowerCase();
-    const partAnswer = partInput.value.trim().toLowerCase();
-    
-    const pretExpected = correctAnswerPretrite.toLowerCase();
-    const partExpected = correctAnswerParticiple.toLowerCase();
-    
-    const pretCorrect = pretAnswer === pretExpected;
-    const partCorrect = partAnswer === partExpected;
-    isCorrect = pretCorrect && partCorrect;
-    
-    pretInput.disabled = true;
-    partInput.disabled = true;
-    
-    if (pretCorrect) pretInput.classList.add('input-correct'); else pretInput.classList.add('input-incorrect');
-    if (partCorrect) partInput.classList.add('input-correct'); else partInput.classList.add('input-incorrect');
-    
-    progressionSystem.recordAttempt(currentVerb[0], isCorrect);
+    stopTimer();
+
+    let isCorrect = false;
+
+    // --- Logique de vérification de la réponse ---
+    if (isRevisionMode) {
+        const pretInput = document.getElementById('pret-input');
+        const partInput = document.getElementById('part-input');
+        const pretAnswer = pretInput.value.trim().toLowerCase();
+        const partAnswer = partInput.value.trim().toLowerCase();
+        const pretExpected = correctAnswerPretrite.toLowerCase();
+        const partExpected = correctAnswerParticiple.toLowerCase();
+
+        const pretCorrect = pretAnswer === pretExpected;
+        const partCorrect = partAnswer === partExpected;
+        isCorrect = pretCorrect && partCorrect;
+
+        pretInput.disabled = true;
+        partInput.disabled = true;
+
+        if (pretCorrect) pretInput.classList.add('input-correct'); else pretInput.classList.add('input-incorrect');
+        if (partCorrect) partInput.classList.add('input-correct'); else partInput.classList.add('input-incorrect');
+    } else if (currentExerciseType === 1) { // Mode input
+        const textInput = document.getElementById('text-answer');
+        const userAnswer = textInput.value.trim().toLowerCase();
+        const possibleAnswers = correctAnswer.split('/').map(a => a.trim().toLowerCase());
+        isCorrect = possibleAnswers.includes(userAnswer);
+
+        textInput.disabled = true;
+        if (isCorrect) textInput.classList.add('input-correct'); else textInput.classList.add('input-incorrect');
+    } else { // Mode QCM
+        const selected = document.querySelector('.option.selected');
+        if (!selected) {
+            alert("Sélectionnez une réponse");
+            return;
+        }
+        isCorrect = selected.textContent === correctAnswer;
+        
+        const options = document.querySelectorAll('.option');
+        options.forEach(opt => {
+            if (opt.textContent === correctAnswer) opt.classList.add('correct');
+            else if (opt === selected && !isCorrect) opt.classList.add('incorrect');
+        });
+    }
+
+    // --- Enregistrement de la progression ---
+    progressionSystem.recordAttempt(currentVerb.base, isCorrect);
     totalQuestions++;
-    
+
+    // --- Affichage du feedback ---
+    feedbackContainer.innerHTML = ''; // On nettoie le feedback précédent
+
     if (isCorrect) {
-      score++;
-      streak++;
-      const fb = document.createElement('div');
-      fb.className = 'feedback correct';
-      fb.textContent = '✅ Correct!';
-      feedbackContainer.appendChild(fb);
+        score++;
+        streak++;
+        const fb = document.createElement('div');
+        fb.className = 'feedback correct';
+        fb.textContent = '✅ Correct !';
+        feedbackContainer.appendChild(fb);
     } else {
-      streak = 0;
-      const fb = document.createElement('div');
-      fb.className = 'feedback incorrect';
-      fb.innerHTML = `❌ Incorrect!<br>Prétérit: ${correctAnswerPretrite}<br>Participe: ${correctAnswerParticiple}`;
-      feedbackContainer.appendChild(fb);
+        streak = 0;
+        const fb = document.createElement('div');
+        fb.className = 'feedback incorrect';
+        let incorrectMessage = `❌ Incorrect. La bonne réponse était : <strong>${correctAnswer}</strong>`;
+        if(isRevisionMode) {
+             incorrectMessage = `❌ Incorrect !<br>Prétérit: <strong>${correctAnswerPretrite}</strong><br>Participe: <strong>${correctAnswerParticiple}</strong>`;
+        }
+        fb.innerHTML = incorrectMessage;
+        feedbackContainer.appendChild(fb);
     }
     
+	// --- NOUVEAU : Affichage des informations supplémentaires (phonétique, exemple) ---
+	const extraInfoDiv = document.createElement('div');
+	extraInfoDiv.className = 'extra-info';
+	
+	// Formes du verbe
+	let formsText = `Formes : ${currentVerb.base} → ${currentVerb.preterite} → ${currentVerb.participle}`;
+	
+	// On vérifie si la phonétique existe
+	if (currentVerb.phonetic) {
+		// On crée un bouton "haut-parleur" cliquable
+		const phoneticSpan = document.createElement('span');
+		phoneticSpan.className = 'phonetic-playback';
+		phoneticSpan.innerHTML = ` <span class="phonetic-text">(${currentVerb.phonetic})</span> <span class="speaker-icon">🔊</span>`;
+    
+		// On ajoute un écouteur d'événement pour lire le mot
+		phoneticSpan.addEventListener('click', () => {
+			speakText(currentVerb.base); // On lit la forme de base du verbe
+		});
+	
+		// On ajoute le bouton à notre texte
+		extraInfoDiv.innerHTML = `<p>${formsText}</p>`;
+		extraInfoDiv.querySelector('p').appendChild(phoneticSpan);
+
+	} else {
+		// S'il n'y a pas de phonétique, on affiche juste les formes
+		extraInfoDiv.innerHTML = `<p>${formsText}</p>`;
+	}
+
+	// Phrase d'exemple (uniquement si la réponse est incorrecte)
+	if (!isCorrect && currentVerb.example) {
+		const exampleText = `<p class="example-sentence"><em>Exemple : ${currentVerb.example}</em></p>`;
+		extraInfoDiv.innerHTML += exampleText;
+	}
+	feedbackContainer.appendChild(extraInfoDiv);
+
+
+    // --- Mise à jour de l'interface ---
     updateScore();
     checkButton.style.display = 'none';
     nextButton.style.display = 'block';
     isCheckingAnswer = true;
     
-    if (streak >= streakGoal) {
-      showCompletionScreen();
+    if (isCorrect && streak >= streakGoal) {
+        showCompletionScreen();
     }
-    return;
-  }
-  
-  if (currentExerciseType === 1) {
-    const textInput = document.getElementById('text-answer');
-    if (textInput) {
-      const userAnswer = textInput.value.trim().toLowerCase();
-      const possibleAnswers = correctAnswer.split('/').map(a => a.trim().toLowerCase());
-      isCorrect = possibleAnswers.includes(userAnswer);
-      
-      textInput.disabled = true;
-	  if (isCorrect) textInput.classList.add('input-correct'); else textInput.classList.add('input-incorrect');
-    }
-  } else {
-    const selected = document.querySelector('.option.selected');
-    if (!selected) {
-      alert("Sélectionnez une réponse");
-      return;
-    }
-    
-    isCorrect = selected.textContent === correctAnswer;
-    
-    const options = document.querySelectorAll('.option');
-    options.forEach(opt => {
-      if (opt.textContent === correctAnswer) opt.classList.add('correct');
-      else if (opt === selected && !isCorrect) opt.classList.add('incorrect');
-    });
-  }
-  
-  progressionSystem.recordAttempt(currentVerb[0], isCorrect);
-  totalQuestions++;
-  
-  if (isCorrect) {
-    score++;
-    streak++;
-    
-    const fb = document.createElement('div');
-    fb.className = 'feedback correct';
-    fb.textContent = '✅ Correct!';
-    feedbackContainer.appendChild(fb);
-    
-    const vf = document.createElement('div');
-    vf.className = 'verb-forms';
-    vf.style.marginTop = '15px';
-    vf.style.padding = '10px';
-    vf.classList.add('verb-forms-correct');
-    vf.style.borderRadius = '5px';
-    vf.innerHTML = `Formes: ${currentVerb[0]} → ${currentVerb[1]} → ${currentVerb[2]}`;
-	vf.classList.add('verb-forms-feedback');
-    feedbackContainer.appendChild(vf);
-    
-    if (streak >= streakGoal) {
-      showCompletionScreen();
-      return;
-    }
-  } else {
-    streak = 0;
-    
-    const fb = document.createElement('div');
-    fb.className = 'feedback incorrect';
-    fb.textContent = `❌ Incorrect. Réponse: ${correctAnswer}`;
-    feedbackContainer.appendChild(fb);
-    
-    const vf = document.createElement('div');
-    vf.className = 'verb-forms';
-    vf.style.marginTop = '15px';
-    vf.style.padding = '10px';
-    vf.classList.add('verb-forms-incorrect');
-    vf.style.borderRadius = '5px';
-    vf.innerHTML = `Formes: ${currentVerb[0]} → ${currentVerb[1]} → ${currentVerb[2]}`;
-	vf.classList.add('verb-forms-feedback');
-    feedbackContainer.appendChild(vf);
-  }
-  
-  updateScore();
-  checkButton.style.display = 'none';
-  nextButton.style.display = 'block';
-  isCheckingAnswer = true;
 }
+
+
+
+/**
+ * Lit un texte à voix haute en utilisant l'API de synthèse vocale du navigateur.
+ * @param {string} text - Le texte à lire.
+ */
+function speakText(text) {
+    // On arrête toute lecture précédente pour éviter les superpositions
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    
+    // On cherche une voix anglaise. 'en-US' est la plus commune.
+    const voices = window.speechSynthesis.getVoices();
+    utterance.voice = voices.find(voice => voice.lang === 'en-US' || voice.lang === 'en-GB');
+
+    // Paramètres optionnels pour améliorer la diction
+    utterance.lang = 'en-US';
+    utterance.rate = 0.9; // Vitesse de lecture (1 = normal)
+    utterance.pitch = 1; // Hauteur de la voix (1 = normal)
+
+    window.speechSynthesis.speak(utterance);
+}
+
+// Pour s'assurer que les voix sont chargées, on peut appeler getVoices une première fois.
+// Ajoutez cette ligne au début de votre script pour pré-charger les voix.
+window.speechSynthesis.getVoices();
+
 
 function showCompletionScreen() {
   stopTimer();

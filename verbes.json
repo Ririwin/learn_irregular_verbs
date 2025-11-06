@@ -4,832 +4,1070 @@
     "preterite": "ran",
     "participle": "run",
     "fr": "courir",
-    "group": 1
+    "group": 1,
+    "phonetic": "/rʌn/",
+    "example": "He ran a marathon last year."
   },
   {
     "base": "dream",
-    "preterite": "dreamt",
-    "participle": "dreamt",
+    "preterite": "dreamt/dreamed",
+    "participle": "dreamt/dreamed",
     "fr": "rêver",
-    "group": 1
+    "group": 1,
+    "phonetic": "/driːm/",
+    "example": "She dreamed of becoming a doctor."
   },
   {
     "base": "bleed",
     "preterite": "bled",
     "participle": "bled",
     "fr": "saigner",
-    "group": 1
+    "group": 1,
+    "phonetic": "/bliːd/",
+    "example": "His knee bled after he fell."
   },
   {
     "base": "know",
     "preterite": "knew",
     "participle": "known",
     "fr": "connaître, savoir",
-    "group": 1
+    "group": 1,
+    "phonetic": "/nəʊ/",
+    "example": "I have known him for ten years."
   },
   {
     "base": "drink",
     "preterite": "drank",
     "participle": "drunk",
     "fr": "boire",
-    "group": 1
+    "group": 1,
+    "phonetic": "/drɪŋk/",
+    "example": "She drank a glass of water."
   },
   {
     "base": "bend",
     "preterite": "bent",
     "participle": "bent",
     "fr": "plier, courber",
-    "group": 1
+    "group": 1,
+    "phonetic": "/bɛnd/",
+    "example": "The strong wind bent the tree."
   },
   {
     "base": "give",
     "preterite": "gave",
     "participle": "given",
     "fr": "donner",
-    "group": 1
+    "group": 1,
+    "phonetic": "/ɡɪv/",
+    "example": "He was given a new bike for his birthday."
   },
   {
     "base": "steal",
     "preterite": "stole",
     "participle": "stolen",
     "fr": "voler",
-    "group": 1
+    "group": 1,
+    "phonetic": "/stiːl/",
+    "example": "Someone stole my wallet."
   },
   {
     "base": "kneel",
-    "preterite": "knelt",
-    "participle": "knelt",
+    "preterite": "knelt/kneeled",
+    "participle": "knelt/kneeled",
     "fr": "s'agenouiller",
-    "group": 1
+    "group": 1,
+    "phonetic": "/niːl/",
+    "example": "He knelt down to pray."
   },
   {
     "base": "speak",
     "preterite": "spoke",
     "participle": "spoken",
     "fr": "parler",
-    "group": 1
+    "group": 1,
+    "phonetic": "/spiːk/",
+    "example": "She has spoken to the manager."
   },
   {
     "base": "throw",
     "preterite": "threw",
     "participle": "thrown",
     "fr": "jeter",
-    "group": 2
+    "group": 2,
+    "phonetic": "/θrəʊ/",
+    "example": "He threw the ball to his dog."
   },
   {
     "base": "strike",
     "preterite": "struck",
-    "participle": "struck",
+    "participle": "struck/stricken",
     "fr": "frapper, heurter",
-    "group": 2
+    "group": 2,
+    "phonetic": "/straɪk/",
+    "example": "The ship was struck by lightning."
   },
   {
     "base": "tell",
     "preterite": "told",
     "participle": "told",
     "fr": "dire, raconter",
-    "group": 2
+    "group": 2,
+    "phonetic": "/tɛl/",
+    "example": "He told me a secret."
   },
   {
     "base": "let",
     "preterite": "let",
     "participle": "let",
     "fr": "laisser, louer",
-    "group": 2
+    "group": 2,
+    "phonetic": "/lɛt/",
+    "example": "She let her children play outside."
   },
   {
     "base": "sweep",
     "preterite": "swept",
     "participle": "swept",
     "fr": "balayer",
-    "group": 2
+    "group": 2,
+    "phonetic": "/swiːp/",
+    "example": "He swept the floor yesterday."
   },
   {
     "base": "do",
     "preterite": "did",
     "participle": "done",
     "fr": "faire",
-    "group": 2
+    "group": 2,
+    "phonetic": "/duː/",
+    "example": "What have you done today?"
   },
   {
     "base": "dig",
     "preterite": "dug",
     "participle": "dug",
     "fr": "creuser, fouiller",
-    "group": 2
+    "group": 2,
+    "phonetic": "/dɪɡ/",
+    "example": "The dog dug a hole in the garden."
   },
   {
     "base": "lie",
     "preterite": "lay",
     "participle": "lain",
-    "fr": "se coucher (être...)",
-    "group": 2
+    "fr": "se coucher (être allongé)",
+    "group": 2,
+    "phonetic": "/laɪ/",
+    "example": "He lay in bed all morning."
   },
   {
     "base": "come",
     "preterite": "came",
     "participle": "come",
     "fr": "venir",
-    "group": 2
+    "group": 2,
+    "phonetic": "/kʌm/",
+    "example": "She came to the party late."
   },
   {
     "base": "teach",
     "preterite": "taught",
     "participle": "taught",
     "fr": "enseigner",
-    "group": 2
+    "group": 2,
+    "phonetic": "/tiːtʃ/",
+    "example": "He has taught English for many years."
   },
   {
     "base": "be",
     "preterite": "was/were",
     "participle": "been",
     "fr": "être",
-    "group": 3
+    "group": 3,
+    "phonetic": "/biː/",
+    "example": "I have been to Paris twice."
   },
   {
     "base": "fly",
     "preterite": "flew",
     "participle": "flown",
     "fr": "voler, aller en avion",
-    "group": 3
+    "group": 3,
+    "phonetic": "/flaɪ/",
+    "example": "The birds have flown south for the winter."
   },
   {
     "base": "cast",
     "preterite": "cast",
     "participle": "cast",
     "fr": "jeter, lancer",
-    "group": 3
+    "group": 3,
+    "phonetic": "/kɑːst/",
+    "example": "The fisherman cast his net into the sea."
   },
   {
     "base": "say",
     "preterite": "said",
     "participle": "said",
     "fr": "dire",
-    "group": 3
+    "group": 3,
+    "phonetic": "/seɪ/",
+    "example": "She said she would be here soon."
   },
   {
     "base": "sell",
     "preterite": "sold",
     "participle": "sold",
     "fr": "vendre",
-    "group": 3
+    "group": 3,
+    "phonetic": "/sɛl/",
+    "example": "He sold his car last week."
   },
   {
     "base": "hang",
     "preterite": "hung",
     "participle": "hung",
     "fr": "accrocher",
-    "group": 3
+    "group": 3,
+    "phonetic": "/hæŋ/",
+    "example": "She hung the painting on the wall."
   },
   {
     "base": "catch",
     "preterite": "caught",
     "participle": "caught",
     "fr": "attraper",
-    "group": 3
+    "group": 3,
+    "phonetic": "/kætʃ/",
+    "example": "The cat caught a mouse."
   },
   {
     "base": "set",
     "preterite": "set",
     "participle": "set",
     "fr": "placer",
-    "group": 3
+    "group": 3,
+    "phonetic": "/sɛt/",
+    "example": "She set the table for dinner."
   },
   {
     "base": "sting",
     "preterite": "stung",
     "participle": "stung",
     "fr": "piquer",
-    "group": 3
+    "group": 3,
+    "phonetic": "/stɪŋ/",
+    "example": "A bee stung him on the arm."
   },
   {
     "base": "begin",
     "preterite": "began",
     "participle": "begun",
     "fr": "commencer",
-    "group": 3
+    "group": 3,
+    "phonetic": "/bɪˈɡɪn/",
+    "example": "The movie has already begun."
   },
   {
     "base": "shut",
     "preterite": "shut",
     "participle": "shut",
     "fr": "fermer",
-    "group": 4
+    "group": 4,
+    "phonetic": "/ʃʌt/",
+    "example": "Please shut the door quietly."
   },
   {
     "base": "forbid",
     "preterite": "forbade",
     "participle": "forbidden",
     "fr": "interdire",
-    "group": 4
+    "group": 4,
+    "phonetic": "/fəˈbɪd/",
+    "example": "Smoking is forbidden in this area."
   },
   {
     "base": "go",
     "preterite": "went",
     "participle": "gone",
     "fr": "aller",
-    "group": 4
+    "group": 4,
+    "phonetic": "/ɡəʊ/",
+    "example": "She has gone to the store."
   },
   {
     "base": "win",
     "preterite": "won",
     "participle": "won",
     "fr": "gagner",
-    "group": 4
+    "group": 4,
+    "phonetic": "/wɪn/",
+    "example": "Our team won the championship."
   },
   {
     "base": "deal",
     "preterite": "dealt",
     "participle": "dealt",
     "fr": "distribuer, traiter",
-    "group": 4
+    "group": 4,
+    "phonetic": "/diːl/",
+    "example": "The problem has been dealt with."
   },
   {
     "base": "eat",
     "preterite": "ate",
     "participle": "eaten",
     "fr": "manger",
-    "group": 4
+    "group": 4,
+    "phonetic": "/iːt/",
+    "example": "Have you eaten lunch yet?"
   },
   {
     "base": "drive",
     "preterite": "drove",
     "participle": "driven",
     "fr": "conduire",
-    "group": 4
+    "group": 4,
+    "phonetic": "/draɪv/",
+    "example": "He drove to work this morning."
   },
   {
     "base": "lend",
     "preterite": "lent",
     "participle": "lent",
     "fr": "prêter",
-    "group": 4
+    "group": 4,
+    "phonetic": "/lɛnd/",
+    "example": "She lent me her book."
   },
   {
     "base": "stand",
     "preterite": "stood",
     "participle": "stood",
     "fr": "se tenir debout",
-    "group": 4
+    "group": 4,
+    "phonetic": "/stænd/",
+    "example": "He stood at the bus stop for an hour."
   },
   {
     "base": "ring",
     "preterite": "rang",
     "participle": "rung",
     "fr": "sonner",
-    "group": 4
+    "group": 4,
+    "phonetic": "/rɪŋ/",
+    "example": "The bell has rung."
   },
   {
     "base": "weep",
     "preterite": "wept",
     "participle": "wept",
     "fr": "pleurer",
-    "group": 5
+    "group": 5,
+    "phonetic": "/wiːp/",
+    "example": "She wept when she heard the sad news."
   },
   {
     "base": "beat",
     "preterite": "beat",
     "participle": "beaten",
     "fr": "battre",
-    "group": 5
+    "group": 5,
+    "phonetic": "/biːt/",
+    "example": "Our team was badly beaten."
   },
   {
     "base": "sit",
     "preterite": "sat",
     "participle": "sat",
     "fr": "s'asseoir",
-    "group": 5
+    "group": 5,
+    "phonetic": "/sɪt/",
+    "example": "He sat on the chair."
   },
   {
     "base": "send",
     "preterite": "sent",
     "participle": "sent",
     "fr": "envoyer",
-    "group": 5
+    "group": 5,
+    "phonetic": "/sɛnd/",
+    "example": "I have sent you an email."
   },
   {
     "base": "stick",
     "preterite": "stuck",
     "participle": "stuck",
     "fr": "coller, coincer",
-    "group": 5
+    "group": 5,
+    "phonetic": "/stɪk/",
+    "example": "The key is stuck in the lock."
   },
   {
     "base": "buy",
     "preterite": "bought",
     "participle": "bought",
     "fr": "acheter",
-    "group": 5
+    "group": 5,
+    "phonetic": "/baɪ/",
+    "example": "She bought a new dress."
   },
   {
     "base": "burn",
-    "preterite": "burnt",
-    "participle": "burnt",
+    "preterite": "burnt/burned",
+    "participle": "burnt/burned",
     "fr": "brûler",
-    "group": 5
+    "group": 5,
+    "phonetic": "/bɜːn/",
+    "example": "He burnt the toast."
   },
   {
     "base": "seek",
     "preterite": "sought",
     "participle": "sought",
     "fr": "chercher",
-    "group": 5
+    "group": 5,
+    "phonetic": "/siːk/",
+    "example": "They sought refuge from the storm."
   },
   {
     "base": "find",
     "preterite": "found",
     "participle": "found",
     "fr": "trouver",
-    "group": 5
+    "group": 5,
+    "phonetic": "/faɪnd/",
+    "example": "I have found my keys."
   },
   {
     "base": "feel",
     "preterite": "felt",
     "participle": "felt",
     "fr": "(res)sentir",
-    "group": 5
+    "group": 5,
+    "phonetic": "/fiːl/",
+    "example": "She felt happy after her exam."
   },
   {
     "base": "spread",
     "preterite": "spread",
     "participle": "spread",
     "fr": "étaler, répandre",
-    "group": 6
+    "group": 6,
+    "phonetic": "/sprɛd/",
+    "example": "The news spread quickly."
   },
   {
     "base": "break",
     "preterite": "broke",
     "participle": "broken",
     "fr": "casser",
-    "group": 6
+    "group": 6,
+    "phonetic": "/breɪk/",
+    "example": "My phone screen is broken."
   },
   {
     "base": "put",
     "preterite": "put",
     "participle": "put",
     "fr": "mettre",
-    "group": 6
+    "group": 6,
+    "phonetic": "/pʊt/",
+    "example": "She put the book on the table."
   },
   {
     "base": "tear",
     "preterite": "tore",
     "participle": "torn",
     "fr": "déchirer",
-    "group": 6
+    "group": 6,
+    "phonetic": "/tɛə/",
+    "example": "He has torn his shirt."
   },
   {
     "base": "have",
     "preterite": "had",
     "participle": "had",
     "fr": "avoir",
-    "group": 6
+    "group": 6,
+    "phonetic": "/hæv/",
+    "example": "We had a great time."
   },
   {
     "base": "meet",
     "preterite": "met",
     "participle": "met",
     "fr": "rencontrer",
-    "group": 6
+    "group": 6,
+    "phonetic": "/miːt/",
+    "example": "I met my wife in college."
   },
   {
     "base": "light",
-    "preterite": "lit",
-    "participle": "lit",
+    "preterite": "lit/lighted",
+    "participle": "lit/lighted",
     "fr": "allumer",
-    "group": 6
+    "group": 6,
+    "phonetic": "/laɪt/",
+    "example": "He lit a fire to keep warm."
   },
   {
     "base": "think",
     "preterite": "thought",
     "participle": "thought",
     "fr": "penser",
-    "group": 6
+    "group": 6,
+    "phonetic": "/θɪŋk/",
+    "example": "I have thought about it all day."
   },
   {
     "base": "build",
     "preterite": "built",
     "participle": "built",
     "fr": "construire",
-    "group": 6
+    "group": 6,
+    "phonetic": "/bɪld/",
+    "example": "They built a new house."
   },
   {
     "base": "grind",
     "preterite": "ground",
     "participle": "ground",
     "fr": "moudre",
-    "group": 6
+    "group": 6,
+    "phonetic": "/ɡraɪnd/",
+    "example": "The coffee is freshly ground."
   },
   {
     "base": "spell",
-    "preterite": "spelt",
-    "participle": "spelt",
+    "preterite": "spelt/spelled",
+    "participle": "spelt/spelled",
     "fr": "épeler",
-    "group": 7
+    "group": 7,
+    "phonetic": "/spɛl/",
+    "example": "He spelled the word correctly."
   },
   {
     "base": "draw",
     "preterite": "drew",
     "participle": "drawn",
     "fr": "dessiner",
-    "group": 7
+    "group": 7,
+    "phonetic": "/drɔː/",
+    "example": "She has drawn a beautiful picture."
   },
   {
     "base": "bet",
     "preterite": "bet",
     "participle": "bet",
     "fr": "parier",
-    "group": 7
+    "group": 7,
+    "phonetic": "/bɛt/",
+    "example": "He bet all his money on that horse."
   },
   {
     "base": "sleep",
     "preterite": "slept",
     "participle": "slept",
     "fr": "dormir",
-    "group": 7
+    "group": 7,
+    "phonetic": "/sliːp/",
+    "example": "The baby has slept for three hours."
   },
   {
     "base": "hide",
     "preterite": "hid",
     "participle": "hidden",
     "fr": "se cacher",
-    "group": 7
+    "group": 7,
+    "phonetic": "/haɪd/",
+    "example": "The treasure was hidden in a cave."
   },
   {
     "base": "spit",
-    "preterite": "spat",
-    "participle": "spat",
+    "preterite": "spat/spit",
+    "participle": "spat/spit",
     "fr": "cracher",
-    "group": 7
+    "group": 7,
+    "phonetic": "/spɪt/",
+    "example": "He spat on the ground in disgust."
   },
   {
     "base": "hear",
     "preterite": "heard",
     "participle": "heard",
     "fr": "entendre",
-    "group": 7
+    "group": 7,
+    "phonetic": "/hɪə/",
+    "example": "Have you heard the news?"
   },
   {
     "base": "lead",
     "preterite": "led",
     "participle": "led",
     "fr": "mener",
-    "group": 7
+    "group": 7,
+    "phonetic": "/liːd/",
+    "example": "She led the team to victory."
   },
   {
     "base": "freeze",
     "preterite": "froze",
     "participle": "frozen",
     "fr": "geler",
-    "group": 7
+    "group": 7,
+    "phonetic": "/friːz/",
+    "example": "The lake has frozen solid."
   },
   {
     "base": "get",
     "preterite": "got",
-    "participle": "got",
+    "participle": "got/gotten",
     "fr": "obtenir",
-    "group": 7
+    "group": 7,
+    "phonetic": "/ɡɛt/",
+    "example": "She has gotten a new job."
   },
   {
     "base": "lay",
     "preterite": "laid",
     "participle": "laid",
-    "fr": "mettre (la table)",
-    "group": 8
+    "fr": "mettre (la table), poser",
+    "group": 8,
+    "phonetic": "/leɪ/",
+    "example": "She laid the baby in his crib."
   },
   {
     "base": "withdraw",
     "preterite": "withdrew",
     "participle": "withdrawn",
     "fr": "se retirer",
-    "group": 8
+    "group": 8,
+    "phonetic": "/wɪðˈdrɔː/",
+    "example": "He withdrew his application."
   },
   {
     "base": "become",
     "preterite": "became",
     "participle": "become",
     "fr": "devenir",
-    "group": 8
+    "group": 8,
+    "phonetic": "/bɪˈkʌm/",
+    "example": "He became a famous actor."
   },
   {
     "base": "shoot",
     "preterite": "shot",
     "participle": "shot",
     "fr": "tirer",
-    "group": 8
+    "group": 8,
+    "phonetic": "/ʃuːt/",
+    "example": "The soldier shot his rifle."
   },
   {
     "base": "upset",
     "preterite": "upset",
     "participle": "upset",
     "fr": "contrarier, renverser",
-    "group": 8
+    "group": 8,
+    "phonetic": "/ʌpˈsɛt/",
+    "example": "The news upset her greatly."
   },
   {
     "base": "learn",
-    "preterite": "learnt",
-    "participle": "learnt",
+    "preterite": "learnt/learned",
+    "participle": "learnt/learned",
     "fr": "apprendre",
-    "group": 8
+    "group": 8,
+    "phonetic": "/lɜːn/",
+    "example": "I have learned a lot today."
   },
   {
     "base": "fight",
     "preterite": "fought",
     "participle": "fought",
     "fr": "combattre, se battre",
-    "group": 8
+    "group": 8,
+    "phonetic": "/faɪt/",
+    "example": "They fought for their freedom."
   },
   {
     "base": "forgive",
     "preterite": "forgave",
     "participle": "forgiven",
     "fr": "pardonner",
-    "group": 8
+    "group": 8,
+    "phonetic": "/fəˈɡɪv/",
+    "example": "She has forgiven him for his mistake."
   },
   {
     "base": "take",
     "preterite": "took",
     "participle": "taken",
     "fr": "prendre",
-    "group": 8
+    "group": 8,
+    "phonetic": "/teɪk/",
+    "example": "He has taken the last cookie."
   },
   {
     "base": "bring",
     "preterite": "brought",
     "participle": "brought",
     "fr": "apporter",
-    "group": 8
+    "group": 8,
+    "phonetic": "/brɪŋ/",
+    "example": "She brought a cake to the party."
   },
   {
     "base": "stink",
     "preterite": "stank",
     "participle": "stunk",
     "fr": "puer",
-    "group": 9
+    "group": 9,
+    "phonetic": "/stɪŋk/",
+    "example": "The garbage stank in the summer heat."
   },
   {
     "base": "read",
     "preterite": "read",
     "participle": "read",
     "fr": "lire",
-    "group": 9
+    "group": 9,
+    "phonetic": "/riːd/",
+    "example": "I have read this book before."
   },
   {
     "base": "grow",
     "preterite": "grew",
     "participle": "grown",
     "fr": "pousser, grandir",
-    "group": 9
+    "group": 9,
+    "phonetic": "/ɡrəʊ/",
+    "example": "The plant has grown a lot."
   },
   {
     "base": "creep",
     "preterite": "crept",
     "participle": "crept",
     "fr": "ramper",
-    "group": 9
+    "group": 9,
+    "phonetic": "/kriːp/",
+    "example": "The cat crept silently towards the mouse."
   },
   {
     "base": "see",
     "preterite": "saw",
     "participle": "seen",
     "fr": "voir",
-    "group": 9
+    "group": 9,
+    "phonetic": "/siː/",
+    "example": "Have you seen my glasses?"
   },
   {
     "base": "pay",
     "preterite": "paid",
     "participle": "paid",
     "fr": "payer",
-    "group": 9
+    "group": 9,
+    "phonetic": "/peɪ/",
+    "example": "She paid for the meal."
   },
   {
     "base": "bite",
     "preterite": "bit",
     "participle": "bitten",
     "fr": "mordre",
-    "group": 9
+    "group": 9,
+    "phonetic": "/baɪt/",
+    "example": "The dog has bitten the postman."
   },
   {
     "base": "breed",
     "preterite": "bred",
     "participle": "bred",
     "fr": "élever, se reproduire",
-    "group": 9
+    "group": 9,
+    "phonetic": "/briːd/",
+    "example": "These dogs are bred for racing."
   },
   {
     "base": "wear",
     "preterite": "wore",
     "participle": "worn",
     "fr": "porter",
-    "group": 9
+    "group": 9,
+    "phonetic": "/wɛə/",
+    "example": "She wore a beautiful dress."
   },
   {
     "base": "leave",
     "preterite": "left",
     "participle": "left",
     "fr": "partir, quitter",
-    "group": 9
+    "group": 9,
+    "phonetic": "/liːv/",
+    "example": "He has left the company."
   },
   {
     "base": "choose",
     "preterite": "chose",
     "participle": "chosen",
     "fr": "choisir",
-    "group": 10
+    "group": 10,
+    "phonetic": "/tʃuːz/",
+    "example": "She was chosen for the team."
   },
   {
     "base": "hold",
     "preterite": "held",
     "participle": "held",
     "fr": "tenir",
-    "group": 10
+    "group": 10,
+    "phonetic": "/həʊld/",
+    "example": "He held the door open for me."
   },
   {
     "base": "burst",
     "preterite": "burst",
     "participle": "burst",
     "fr": "éclater",
-    "group": 10
+    "group": 10,
+    "phonetic": "/bɜːst/",
+    "example": "The balloon burst."
   },
   {
     "base": "rise",
     "preterite": "rose",
     "participle": "risen",
     "fr": "s'élever, monter",
-    "group": 10
+    "group": 10,
+    "phonetic": "/raɪz/",
+    "example": "The sun has risen."
   },
   {
     "base": "feed",
     "preterite": "fed",
     "participle": "fed",
     "fr": "nourrir",
-    "group": 10
+    "group": 10,
+    "phonetic": "/fiːd/",
+    "example": "She fed the birds this morning."
   },
   {
     "base": "cost",
     "preterite": "cost",
     "participle": "cost",
     "fr": "coûter",
-    "group": 10
+    "group": 10,
+    "phonetic": "/kɒst/",
+    "example": "This jacket cost me a lot of money."
   },
   {
     "base": "awake",
     "preterite": "awoke",
     "participle": "awoken",
     "fr": "se réveiller",
-    "group": 10
+    "group": 10,
+    "phonetic": "/əˈweɪk/",
+    "example": "I was awoken by a loud noise."
   },
   {
     "base": "cut",
     "preterite": "cut",
     "participle": "cut",
     "fr": "couper",
-    "group": 10
+    "group": 10,
+    "phonetic": "/kʌt/",
+    "example": "He has cut his finger."
   },
   {
     "base": "arise",
     "preterite": "arose",
     "participle": "arisen",
     "fr": "survenir, surgir",
-    "group": 10
+    "group": 10,
+    "phonetic": "/əˈraɪz/",
+    "example": "A new problem has arisen."
   },
   {
     "base": "show",
     "preterite": "showed",
     "participle": "shown",
     "fr": "montrer",
-    "group": 10
+    "group": 10,
+    "phonetic": "/ʃəʊ/",
+    "example": "He showed me his new car."
   },
   {
     "base": "make",
     "preterite": "made",
     "participle": "made",
-    "fr": "faire",
-    "group": 11
+    "fr": "faire, fabriquer",
+    "group": 11,
+    "phonetic": "/meɪk/",
+    "example": "She made a delicious cake."
   },
   {
     "base": "lose",
     "preterite": "lost",
     "participle": "lost",
     "fr": "perdre",
-    "group": 11
+    "group": 11,
+    "phonetic": "/luːz/",
+    "example": "I have lost my phone."
   },
   {
     "base": "mean",
     "preterite": "meant",
     "participle": "meant",
     "fr": "signifier",
-    "group": 11
+    "group": 11,
+    "phonetic": "/miːn/",
+    "example": "I didn't know what the word meant."
   },
   {
     "base": "hurt",
     "preterite": "hurt",
     "participle": "hurt",
     "fr": "blesser",
-    "group": 11
+    "group": 11,
+    "phonetic": "/hɜːt/",
+    "example": "My back hurts."
   },
   {
     "base": "sing",
     "preterite": "sang",
     "participle": "sung",
     "fr": "chanter",
-    "group": 11
+    "group": 11,
+    "phonetic": "/sɪŋ/",
+    "example": "She has sung in the choir for years."
   },
   {
     "base": "blow",
     "preterite": "blew",
     "participle": "blown",
     "fr": "souffler",
-    "group": 11
+    "group": 11,
+    "phonetic": "/bləʊ/",
+    "example": "The wind blew all night."
   },
   {
     "base": "keep",
     "preterite": "kept",
     "participle": "kept",
     "fr": "garder",
-    "group": 11
+    "group": 11,
+    "phonetic": "/kiːp/",
+    "example": "He kept his promise."
   },
   {
     "base": "forget",
     "preterite": "forgot",
     "participle": "forgotten",
     "fr": "oublier",
-    "group": 11
+    "group": 11,
+    "phonetic": "/fəˈɡɛt/",
+    "example": "I have forgotten your name."
   },
   {
     "base": "ride",
     "preterite": "rode",
     "participle": "ridden",
     "fr": "faire du vélo/cheval",
-    "group": 11
+    "group": 11,
+    "phonetic": "/raɪd/",
+    "example": "She has ridden a horse before."
   },
   {
     "base": "hit",
     "preterite": "hit",
     "participle": "hit",
     "fr": "frapper",
-    "group": 11
+    "group": 11,
+    "phonetic": "/hɪt/",
+    "example": "The car hit a tree."
   },
   {
     "base": "fall",
     "preterite": "fell",
     "participle": "fallen",
     "fr": "tomber",
-    "group": 12
+    "group": 12,
+    "phonetic": "/fɔːl/",
+    "example": "The leaves have fallen from the trees."
   },
   {
     "base": "swear",
     "preterite": "swore",
     "participle": "sworn",
     "fr": "jurer",
-    "group": 12
+    "group": 12,
+    "phonetic": "/swɛə/",
+    "example": "He swore to tell the truth."
   },
   {
     "base": "smell",
-    "preterite": "smelt",
-    "participle": "smelt",
+    "preterite": "smelt/smelled",
+    "participle": "smelt/smelled",
     "fr": "sentir (odorat)",
-    "group": 12
+    "group": 12,
+    "phonetic": "/smɛl/",
+    "example": "The food smelled delicious."
   },
   {
     "base": "swim",
     "preterite": "swam",
     "participle": "swum",
     "fr": "nager",
-    "group": 12
+    "group": 12,
+    "phonetic": "/swɪm/",
+    "example": "I have swum across the lake."
   },
   {
     "base": "spend",
     "preterite": "spent",
     "participle": "spent",
     "fr": "dépenser, passer",
-    "group": 12
+    "group": 12,
+    "phonetic": "/spɛnd/",
+    "example": "He spent all his money on clothes."
   },
   {
     "base": "shake",
     "preterite": "shook",
     "participle": "shaken",
     "fr": "secouer, trembler",
-    "group": 12
+    "group": 12,
+    "phonetic": "/ʃeɪk/",
+    "example": "Her hands were shaken with fear."
   },
   {
     "base": "wake",
     "preterite": "woke",
     "participle": "woken",
     "fr": "se réveiller",
-    "group": 12
+    "group": 12,
+    "phonetic": "/weɪk/",
+    "example": "The noise woke the baby."
   },
   {
     "base": "understand",
     "preterite": "understood",
     "participle": "understood",
     "fr": "comprendre",
-    "group": 12
+    "group": 12,
+    "phonetic": "/ˌʌndəˈstænd/",
+    "example": "I have understood the lesson."
   },
   {
     "base": "write",
     "preterite": "wrote",
     "participle": "written",
     "fr": "écrire",
-    "group": 12
+    "group": 12,
+    "phonetic": "/raɪt/",
+    "example": "She has written a new book."
   }
 ]
